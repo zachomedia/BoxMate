@@ -9,7 +9,7 @@ import app.boxmate.*;
  * @version 1.0.0 (31/05/2012)
  * @since 1.0.0
  */
-class MainProgram
+public class MainProgram
 {
 	/**
 	 * Prints the provided character, the provided number of times.
