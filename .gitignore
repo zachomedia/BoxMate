@@ -1,3 +1,5 @@
 *.jcu
 *.jcp
 *.jcw
+Build/*
+src_boxmate.txt
