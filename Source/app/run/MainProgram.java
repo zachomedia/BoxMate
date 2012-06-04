@@ -43,11 +43,11 @@ public class MainProgram
         try
         {
             boolean nimbusfound = false;
-            
+
             //Get system look
             final String SYSTEM_LOOK = UIManager.getSystemLookAndFeelClassName();
-            
-             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+
+             /*for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
              {
                  if ("Nimbus".equals(info.getName())) {
                      UIManager.setLookAndFeel(info.getClassName());
@@ -55,9 +55,9 @@ public class MainProgram
                      break;
                  }
              }
-            
+
              //Set system look
-             if (!nimbusfound)
+             if (!nimbusfound)*/
                  UIManager.setLookAndFeel(SYSTEM_LOOK);
         }//End of try
         catch (Exception e)
@@ -65,7 +65,7 @@ public class MainProgram
             e.printStackTrace();
             //Do nothing, use default java look
         }//End of catch
-		
+
 		printChar('*', 50);
 		System.out.println("\t Welcome to BoxMate");
 		printChar('*', 50);
@@ -77,7 +77,7 @@ public class MainProgram
 		System.out.println("Shows");
 		for (Show show : shows)
 			System.out.println(" + " + show.getName());
-			
+
 		new NewTicket();
 	}//End of main method
 }//End of class
