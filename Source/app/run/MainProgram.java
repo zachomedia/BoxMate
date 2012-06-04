@@ -1,6 +1,9 @@
 package app.run;
 
 import app.boxmate.*;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.UIManager.*;
 
 /**
  * Starts the application.
@@ -36,6 +39,33 @@ public class MainProgram
  	 */
 	public static void main (String [] args) throws Exception
 	{
+		// set the look and feel to that of the current OS
+        try
+        {
+            boolean nimbusfound = false;
+            
+            //Get system look
+            final String SYSTEM_LOOK = UIManager.getSystemLookAndFeelClassName();
+            
+             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+             {
+                 if ("Nimbus".equals(info.getName())) {
+                     UIManager.setLookAndFeel(info.getClassName());
+                     nimbusfound = true;
+                     break;
+                 }
+             }
+            
+             //Set system look
+             if (!nimbusfound)
+                 UIManager.setLookAndFeel(SYSTEM_LOOK);
+        }//End of try
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            //Do nothing, use default java look
+        }//End of catch
+		
 		printChar('*', 50);
 		System.out.println("\t Welcome to BoxMate");
 		printChar('*', 50);
@@ -47,5 +77,7 @@ public class MainProgram
 		System.out.println("Shows");
 		for (Show show : shows)
 			System.out.println(" + " + show.getName());
+			
+		new NewTicket();
 	}//End of main method
 }//End of class
