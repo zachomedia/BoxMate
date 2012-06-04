@@ -22,11 +22,17 @@ public class NewTicket extends JFrame
 		private JTextField txtFirstName;
 		private JTextField txtLastName;
 		private JTextField txtAddressHouseNumber;
-		private JTextField txtAddresStreet;
+		private JTextField txtAddressStreet;
 		private JTextField txtAddressStreetSufix;
 		private JTextField txtAddressCity;
 		private JTextField txtAddressProvince;
 		private JTextField txtAddressPostalCode;
+		private JTextField txtPhoneAreaCode;
+		private JTextField txtPhonePrefix;
+		private JTextField txtPhoneLine;
+		private JTextField txtEmailAddress;
+		private JTextField txtEmailAddressDomain;
+		private JTextField txtEmailAddressTLD;
 	
 	/**
 	 * Creates the GUI.
@@ -55,6 +61,21 @@ public class NewTicket extends JFrame
 		//Setup the customer information panel
 		this.customerInformationPanel = new JPanel(new FlowLayout());
 		this.customerInformationPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Customer"), BorderFactory.createEmptyBorder(PADDING_SIZE,PADDING_SIZE,PADDING_SIZE,PADDING_SIZE)));
+		
+		this.txtFirstName = new JTextField();
+		this.txtLastName = new JTextField();
+		this.txtAddressHouseNumber = new JTextField();
+		this.txtAddressStreet = new JTextField();
+		this.txtAddressStreetSufix = new JTextField();
+		this.txtAddressCity = new JTextField();
+		this.txtAddressProvince = new JTextField();
+		this.txtAddressPostalCode = new JTextField();
+		this.txtPhoneAreaCode = new JTextField();
+		this.txtPhonePrefix = new JTextField();
+		this.txtPhoneLine = new JTextField();
+		this.txtEmailAddress = new JTextField();
+		this.txtEmailAddressDomain = new JTextField();
+		this.txtEmailAddressTLD = new JTextField();
 		
 		this.add(this.customerInformationPanel);
 		
