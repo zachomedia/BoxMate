@@ -150,33 +150,4 @@ public class Database
 		//Execute the update
 		query.executeUpdate();
 	}//End of writeShow method
-	
-	public static void main (String [] args) throws Exception
-	{
-		Database db = new Database();
-		
-		Show [] shows = db.loadShows();
-		
-		/*System.out.println("*************************************");
-		System.out.println("*     SHOWS CURRENTLY IN THEATRE    *");
-		System.out.println("*************************************");
-		
-		for (Show show : shows)
-			System.out.println(" " + show.getName());*/
-	
-		Show newShow = new Show("High School Musical", "Insert some really cool awesome description here.", new ArrayList<String>(), new ArrayList<Showing>(), Rating.PG, 8.0);
-		//db.writeShow(newShow);
-	
-		shows = db.loadShows();
-		
-		System.out.println("*************************************");
-		System.out.println("*     SHOWS CURRENTLY IN THEATRE    *");
-		System.out.println("*************************************");
-		
-		for (Show show : shows)
-		{
-			System.out.println(" " + show.getName());
-			System.out.println("       " + show.getDescription());
-		}//End of for
-	}//End of class
 }//End of class
