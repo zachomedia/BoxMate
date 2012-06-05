@@ -67,21 +67,10 @@ public class MainProgram
             //Do nothing, use default java look
         }//End of catch
 
-/*		printChar('*', 50);
-		System.out.println("\t Welcome to BoxMate");
-		printChar('*', 50);
+	
+		new Dashboard();
 
-		Database db = new Database();
-
-		Show [] shows = db.loadShows();
-
-		System.out.println("Shows");
-		for (Show show : shows)
-			System.out.println(" + " + show.getName());
-*/
-		//new NewTicket();
-
-		Database db = new Database();
-		db.writeUser(new Customer("zseguin", "password", 10, "Zachary", "Seguin", new Address(429, "Cardigan", "Place", "London", "Ontario", "N6M 1J6"), "zseguin@me.com", new PhoneNumber(519, 668, 3141), new CreditCard(), new ArrayList<Ticket>()));
+		//Database db = new Database();
+		//db.writeUser(new Customer("zseguin", "password", 10, "Zachary", "Seguin", new Address(429, "Cardigan", "Place", "London", "Ontario", "N6M 1J6"), "zseguin@me.com", new PhoneNumber(519, 668, 3141), new CreditCard(), new ArrayList<Ticket>()));
 	}//End of main method
 }//End of class
