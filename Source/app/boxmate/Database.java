@@ -43,7 +43,7 @@ public class Database
 		public final static String COMPANY = "company";
 		public final static String POSITION = "position";
 	}//End of inner class
-	
+
 	/**
 	 * Stores the MySQLDatabaseManager.
 	 */
@@ -69,7 +69,7 @@ public class Database
 	 * @param username The username of the database user.
 	 * @param password The password of the database user.
 	 */
-	public Database(String host, String databaseName, String username, String password) throws 
+	public Database(String host, String databaseName, String username, String password) throws
 	Exception
 	{
 		if (database == null)
@@ -91,48 +91,48 @@ public class Database
 		int numberOfShows = 0;
 		Show [] shows;
 		Show show;
-		
+
 		//Query the database to get all the shows
 		ResultSet rsShows = database.query("SELECT * FROM shows");
-		
+
 		//Get the number of shows, if there are shows
 		if (rsShows.last())
 		{
 			numberOfShows = rsShows.getRow();
-			
+
 			//Create the array
 			shows = new Show[numberOfShows];
-			
+
 			//Iterate through all the shows, and create a Show object
 			rsShows.beforeFirst();
-			
+
 			while (rsShows.next())
 			{
 				ArrayList<String> productionMembers = new ArrayList<String>();
-				
+
 				show = new Show();
-				
+
 				show.setName(rsShows.getString(Shows.NAME));
 				show.setDescription(rsShows.getString(Shows.DESCRIPTION));
-				
+
 				productionMembers.add(rsShows.getString(Shows.PRODUCTION_MEMBERS));
 				show.setProductionMembers(productionMembers);
 				//show.setRating(rsShows.getString(Shows.RATING)); TODO: GET SEARCH
 				show.setRating(Rating.PG);
 				show.setRanking(rsShows.getDouble(Shows.RANKING));
-				
+
 				shows[rsShows.getRow() - 1] = show;
 			}//End of while
 		}//End of if
 		else
 			return new Show[0];
-			
+
 		return shows;
 	}//End of loadShows method
-	
+
 	/**
 	 * Writes the show to the database.
-	 * 
+	 *
 	 * @param show The show to add to the database.
 	 *
 	 * @since 1.0.0
@@ -146,7 +146,31 @@ public class Database
 		query.setString(3, show.getProductionMembers().toString());
 		query.setString(4, show.getRating().toString());
 		query.setDouble(5, show.getRanking());
-		 
+
+		//Execute the update
+		query.executeUpdate();
+	}//End of writeShow method
+
+	/**
+	 * Writes a user database.
+	 *
+	 * @param show The show to add to the database.
+	 *
+	 * @since 1.0.0
+	 */
+	public void writeUser(User user) throws Exception
+	{
+		//Prepare the query
+		PreparedStatement query = database.getPreparedStatement("INSERT INTO users (username, password, accountLevel, firstName, lastName, address, emailAddress, phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		query.setString(1, user.getUsername());
+		query.setString(2, user.getPassword());
+		query.setInt(3, user.getAccountLevel());
+		query.setString(4, user.getFirstName());
+		query.setString(5, user.getLastName());
+		query.setString(6, user.getAddress().toString());
+		query.setString(7, user.getEmailAddress());
+		query.setString(8, user.getPhoneNumber().toString());
+
 		//Execute the update
 		query.executeUpdate();
 	}//End of writeShow method
