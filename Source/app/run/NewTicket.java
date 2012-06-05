@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package app.run;
 
 import app.boxmate.*;
@@ -41,7 +40,7 @@ public class NewTicket extends JFrame
 		private JTextField txtEmailAddress;
 		private JTextField txtEmailAddressDomain;
 		private JTextField txtEmailAddressTLD;
-		
+
 	private JPanel buttonsPanel;
 		private JButton cmdDone;
 
@@ -197,13 +196,13 @@ public class NewTicket extends JFrame
 		thirdRow.add(emailFields);
 
 		this.customerInformationPanel.add(thirdRow);
-		
+
 		//Buttons Panel
 		this.buttonsPanel = new JPanel(new GridLayout(1, 1, 5, 5));
-		
+
 		this.cmdDone = new JButton("Done");
-		
-		this.buttonsPanel.add(this.cmdDone);		
+
+		this.buttonsPanel.add(this.cmdDone);
 
 		//Setup the frame layout manager
 		SpringLayout layout = new SpringLayout();
@@ -272,7 +271,7 @@ public class NewTicket extends JFrame
 		private JTextField txtEmailAddress;
 		private JTextField txtEmailAddressDomain;
 		private JTextField txtEmailAddressTLD;
-		
+
 	private JPanel buttonsPanel;
 		private JButton cmdDone;
 
@@ -428,13 +427,13 @@ public class NewTicket extends JFrame
 		thirdRow.add(emailFields);
 
 		this.customerInformationPanel.add(thirdRow);
-		
+
 		//Buttons Panel
 		this.buttonsPanel = new JPanel(new GridLayout(1, 1, 5, 5));
-		
+
 		this.cmdDone = new JButton("Done");
-		
-		this.buttonsPanel.add(this.cmdDone);		
+
+		this.buttonsPanel.add(this.cmdDone);
 
 		//Setup the frame layout manager
 		SpringLayout layout = new SpringLayout();
