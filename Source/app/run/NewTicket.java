@@ -51,7 +51,7 @@ public class NewTicket extends JFrame
 		//Setup the GUI
 		this.setTitle("New Ticket | " + Application.NAME);
 		this.setSize(800, 400);
-		//this.setResizable(false);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

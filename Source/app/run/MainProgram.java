@@ -66,7 +66,7 @@ public class MainProgram
             //Do nothing, use default java look
         }//End of catch
 
-		printChar('*', 50);
+/*		printChar('*', 50);
 		System.out.println("\t Welcome to BoxMate");
 		printChar('*', 50);
 
@@ -77,7 +77,7 @@ public class MainProgram
 		System.out.println("Shows");
 		for (Show show : shows)
 			System.out.println(" + " + show.getName());
-
+*/
 		new NewTicket();
 	}//End of main method
 }//End of class
