@@ -29,6 +29,7 @@ public class Dashboard extends JFrame implements ActionListener
 		this.setResizable(false);
 		this.setDefaultLocation(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}//End of constructor
 	
 	/**
