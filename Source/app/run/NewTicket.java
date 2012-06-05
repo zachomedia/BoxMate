@@ -16,7 +16,7 @@ public class NewTicket extends JFrame
 {
 	//Declare and initialize constants
 	private final int PADDING_SIZE = 10;
-	private final String [] PROVINCES = {"Ontario", "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nortwest Territories", "Nova Scotia", "Nunavut", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon"};
+	private final String [] PROVINCES = {"Ontario", "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon"};
 
 	//Declare GUI components.
 	private JPanel ticketInformationPanel;
@@ -40,6 +40,9 @@ public class NewTicket extends JFrame
 		private JTextField txtEmailAddress;
 		private JTextField txtEmailAddressDomain;
 		private JTextField txtEmailAddressTLD;
+		
+	private JPanel buttonsPanel;
+		private JButton cmdDone;
 
 	/**
 	 * Creates the GUI.
@@ -193,6 +196,13 @@ public class NewTicket extends JFrame
 		thirdRow.add(emailFields);
 
 		this.customerInformationPanel.add(thirdRow);
+		
+		//Buttons Panel
+		this.buttonsPanel = new JPanel(new GridLayout(1, 1, 5, 5));
+		
+		this.cmdDone = new JButton("Done");
+		
+		this.buttonsPanel.add(this.cmdDone);		
 
 		//Setup the frame layout manager
 		SpringLayout layout = new SpringLayout();
@@ -207,9 +217,15 @@ public class NewTicket extends JFrame
 		layout.putConstraint(SpringLayout.EAST, this.customerInformationPanel, -20, SpringLayout.EAST, this.getContentPane());
 		layout.putConstraint(SpringLayout.WEST, this.customerInformationPanel, 20, SpringLayout.WEST, this.getContentPane());
 
+		layout.putConstraint(SpringLayout.NORTH, this.buttonsPanel, 325, SpringLayout.NORTH, this.getContentPane());
+		layout.putConstraint(SpringLayout.EAST, this.buttonsPanel, -20, SpringLayout.EAST, this.getContentPane());
+		layout.putConstraint(SpringLayout.WEST, this.buttonsPanel, 20, SpringLayout.WEST, this.getContentPane());
+
+
 		//Add the panels to the frame
 		this.add(this.ticketInformationPanel);
 		this.add(this.customerInformationPanel);
+		this.add(this.buttonsPanel);
 
 	}//End of initializeGUI method
 }//End of class
