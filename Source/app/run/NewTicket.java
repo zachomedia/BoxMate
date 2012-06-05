@@ -81,7 +81,7 @@ public class NewTicket extends JFrame
 		}//End of try
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(this, "An error occured querying the database. Unable to list available shows.\n\nIf this problem continues, please contact your system administrator", "Database Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "An error occured querying the database. Unable to list available shows.\n\nIf this problem continues, please contact your system administrator.", "Database Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
 			//Close the frame
 			this.dispose();
