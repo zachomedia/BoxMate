@@ -12,7 +12,7 @@ import javax.swing.*;
  * @version 1.0.0 (4/6/2012)
  * @since 1.0.0
  */
-public class NewTicket extends JFrame
+public class NewTicket extends JFrame implements ActionListener
 {
 	//Declare and initialize constants
 	private final int PADDING_SIZE = 10;
@@ -228,4 +228,83 @@ public class NewTicket extends JFrame
 		this.add(this.buttonsPanel);
 
 	}//End of initializeGUI method
+
+	/**
+	 * Invoked when an action occurs.
+	 *
+	 * @param evt The event which occured.
+	 *
+	 * @since 1.0.0
+	 */
+	public void actionPerformed(ActionEvent evt)
+	{
+		if (evt.getActionCommand().equals("done"))
+		{
+			createNewUser();
+		}
+	}//End of actionPerformed method
+
+	/**
+	 * Creates a new <code>Customer</code> object to .
+	 *
+	 * @since 1.0.0
+	 */
+	private void createNewUser()
+	{
+		try
+		{
+			Customer customer = new Customer();
+			Address address = new Address();
+			PhoneNumber phone = new PhoneNumber();
+			String email = "";
+
+			address.setHouseNumber(Integer.parseInt(txtAddressHouseNumber.getText()));
+			address.setStreetName(txtAddressStreet.getText());
+			address.setStreetSufix(txtAddressStreetSufix.getText());
+			//city field
+			address.setProvince((String)cboAddressProvince.getSelectedItem());
+			address.setPostalCode(txtAddressPostalCode.getText().toUpperCase());
+
+			email = txtEmailAddress.getText() + "@" + txtEmailAddressDomain.getText() + "." + txtEmailAddressTLD.getText();
+
+			phone.setAreaCode(Integer.parseInt(txtPhoneAreaCode.getText()));
+			phone.setPrefix(Integer.parseInt(txtPhonePrefix.getText()));
+			phone.setLineNumber(Integer.parseInt(txtPhoneLine.getText()));
+
+			customer.setFirstName(txtFirstName.getText());
+			customer.setLastName(txtLastName.getText());
+			customer.setAddress(address);
+			customer.setEmailAddress(email);
+			customer.setPhoneNumber(phone);
+
+			//Temporary output
+			System.out.println(customer.toString());
+		}
+		catch (NumberFormatException e)
+		{
+			String errSource = "";
+
+			//Determine the source of the exception
+			for (StackTraceElement element : e.getStackTrace())
+			{
+				if (element.getMethodName().equals("createNewUser"))
+				{
+					switch (element.getLineNumber())
+					{
+						//Check line numbers often!
+						case 263:	errSource += "  Check address.";
+									break;
+						case 272:
+						case 273:
+						case 274:	errSource += "  Check phone number.";
+									break;
+						default:	break;
+					}
+				}
+			}
+
+			Toolkit.getDefaultToolkit().beep();
+			JOptionPane.showMessageDialog(this, "Error: Numerical input entered incorrectly." + errSource, "Input Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+		}
+	}//End of createNewUser method
 }//End of class
