@@ -84,6 +84,7 @@ public class NewTicket extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(this, "An error occured querying the database. Unable to list available shows.\n\nIf this problem continues, please contact your system administrator", "Database Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
 			//Close the frame
+			this.setVisible(false);
 			this.dispose();
 		}//End of catch
 
@@ -198,10 +199,17 @@ public class NewTicket extends JFrame implements ActionListener
 		this.customerInformationPanel.add(thirdRow);
 
 		//Buttons Panel
-		this.buttonsPanel = new JPanel(new GridLayout(1, 1, 5, 5));
+		this.buttonsPanel = new JPanel(new GridLayout(1, 6, 5, 5));
 
 		this.cmdDone = new JButton("Done");
+		this.cmdDone.addActionListener(this);
+		this.cmdDone.setActionCommand("done");
 
+		this.buttonsPanel.add(new JLabel(""));
+		this.buttonsPanel.add(new JLabel(""));
+		this.buttonsPanel.add(new JLabel(""));
+		this.buttonsPanel.add(new JLabel(""));
+		this.buttonsPanel.add(new JLabel(""));
 		this.buttonsPanel.add(this.cmdDone);
 
 		//Setup the frame layout manager
@@ -251,60 +259,121 @@ public class NewTicket extends JFrame implements ActionListener
 	 */
 	private void createNewUser()
 	{
+		Customer customer = new Customer();
+		Address address = new Address();
+		PhoneNumber phone = new PhoneNumber();
+		String email = "";
+
+		if (txtFirstName.getText().length() != 0)
+			customer.setFirstName(txtFirstName.getText());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter the customer's first name.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of else
+
+		if (txtLastName.getText().length() != 0)
+			customer.setLastName(txtLastName.getText());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter the customer's last name.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of else
+
 		try
 		{
-			Customer customer = new Customer();
-			Address address = new Address();
-			PhoneNumber phone = new PhoneNumber();
-			String email = "";
+			if (txtAddressHouseNumber.getText().length() != 0)
+				address.setHouseNumber(Integer.parseInt(txtAddressHouseNumber.getText()));
+			else
+			{
+				JOptionPane.showMessageDialog(this, "Please enter the house number.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
-			address.setHouseNumber(Integer.parseInt(txtAddressHouseNumber.getText()));
+				return;
+			}//End of else
+		}//End of try
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(this, "An error occured processing the house number.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of catch
+
+		if (txtAddressStreet.getText().length() != 0)
 			address.setStreetName(txtAddressStreet.getText());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter the street name.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of else
+
+		if (txtAddressStreetSufix.getText().length() != 0)
 			address.setStreetSufix(txtAddressStreetSufix.getText());
-			//city field
-			address.setProvince((String)cboAddressProvince.getSelectedItem());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter the street suffix.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of else
+
+		//city field
+		address.setProvince((String)cboAddressProvince.getSelectedItem());
+
+		if (txtAddressPostalCode.getText().length() != 0)
 			address.setPostalCode(txtAddressPostalCode.getText().toUpperCase());
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter the postal code.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
-			email = txtEmailAddress.getText() + "@" + txtEmailAddressDomain.getText() + "." + txtEmailAddressTLD.getText();
+			return;
+		}//End of else
 
+		if (txtPhoneAreaCode.getText().length() == 3 && txtPhonePrefix.getText().length() == 3 && txtPhoneLine.getText().length() == 4)
+		{
 			phone.setAreaCode(Integer.parseInt(txtPhoneAreaCode.getText()));
 			phone.setPrefix(Integer.parseInt(txtPhonePrefix.getText()));
 			phone.setLineNumber(Integer.parseInt(txtPhoneLine.getText()));
-
-			customer.setFirstName(txtFirstName.getText());
-			customer.setLastName(txtLastName.getText());
-			customer.setAddress(address);
-			customer.setEmailAddress(email);
-			customer.setPhoneNumber(phone);
-
-			//Temporary output
-			System.out.println(customer.toString());
 		}
-		catch (NumberFormatException e)
+		else
 		{
-			String errSource = "";
+			JOptionPane.showMessageDialog(this, "Please enter a valid phone number.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
-			//Determine the source of the exception
-			for (StackTraceElement element : e.getStackTrace())
-			{
-				if (element.getMethodName().equals("createNewUser"))
-				{
-					switch (element.getLineNumber())
-					{
-						//Check line numbers often!
-						case 263:	errSource += "  Check address.";
-									break;
-						case 272:
-						case 273:
-						case 274:	errSource += "  Check phone number.";
-									break;
-						default:	break;
-					}
-				}
-			}
+			return;
+		}//End of else
 
-			Toolkit.getDefaultToolkit().beep();
-			JOptionPane.showMessageDialog(this, "Error: Numerical input entered incorrectly." + errSource, "Input Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+		if (txtEmailAddress.getText().length() != 0 && txtEmailAddressDomain.getText().length() != 0 && txtEmailAddressTLD.getText().length() != 0)
+			email = txtEmailAddress.getText() + "@" + txtEmailAddressDomain.getText() + "." + txtEmailAddressTLD.getText();
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}//End of else
+
+		customer.setAddress(address);
+		customer.setEmailAddress(email);
+		customer.setPhoneNumber(phone);
+
+		//Create username and password
+		customer.setUsername(customer.getFirstName().toLowerCase() + "." + customer.getLastName().toLowerCase());
+		customer.setPassword("NoPasswordExists");
+
+		//Temporary output
+		System.out.println(customer.toString());
+
+		//Add the user to the database
+		try
+		{
+			Database database = new Database();
+			database.writeUser(customer);
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(this, "An error occured adding the user. If this problem continues, please contact your system administrator.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
+
+			return;
 		}
 	}//End of createNewUser method
 }//End of class
