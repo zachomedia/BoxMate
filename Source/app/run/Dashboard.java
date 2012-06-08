@@ -57,7 +57,9 @@ public class Dashboard extends JFrame implements ActionListener
 		this.getContentPane().setLayout(new GridLayout(1, 2, 0, 0));
 
 		//Initialize the left side
-		this.lblLogo = new JLabel("LOGO GOES HERE");
+		ImageIcon imgLogo = new ImageIcon("P:/Final Project/Project/BoxMate/Build/app/images/logo.png");
+		
+		this.lblLogo = new JLabel(imgLogo);
 		this.lblLogo.setHorizontalAlignment(JLabel.CENTER);
 
 		this.add(lblLogo);
