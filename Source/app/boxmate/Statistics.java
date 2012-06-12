@@ -7,11 +7,13 @@ package app.boxmate;
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
-public enum Statistics {
+public enum Statistics
+{
 	/**
 	 * The average distance travelled per customer.
 	 */
-    AVG_DISTANCE
+    AVG_DISTANCE,
+    
     /**
 	 * The average amount of tickets bought per customer.
 	 */

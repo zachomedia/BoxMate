@@ -88,7 +88,7 @@ package app.boxmate;
 	 *
 	 * @since 1.0.0
 	 */
-	public Address(int houseNumber, String streetName, String streetSufix, String city, String province, String country, String postalCode)
+	public Address(int houseNumber, String streetName, String streetSuffix, String city, String province, String country, String postalCode)
 	{
 		//Intialize all the instance variables.
 		this.houseNumber = houseNumber;

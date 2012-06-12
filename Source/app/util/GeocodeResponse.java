@@ -1,3 +1,5 @@
+package app.util;
+
 /*
  * This class is written by manshreck from: http://code.google.com/p/gmaps-samples/source/browse/trunk/geocoder/java/?r=2476
  */

@@ -92,22 +92,16 @@ public class ShowRoster
 		switch (sortType)
 		{
 			case NAME:			return sortByName();
-								break;
 										
 			case DESCRIPTION:	return sortByDescription();
-								break;
 																		
 			case NEXT_SHOWING:	return sortByNextShowing();
-								break;
 										
 			case RATING:		return sortByRating();
-								break;
 									
 			case RANKING:		return sortByRanking();
-								break;
 										
 			default:			return this;
-								break;
 		}
 	}//End of sort method
 

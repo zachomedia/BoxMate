@@ -42,6 +42,7 @@ public class NewTicket extends JFrame implements ActionListener
 		private JTextField txtEmailAddressTLD;
 
 	private JPanel buttonsPanel;
+		private JButton cmdCancel;
 		private JButton cmdDone;
 
 	/**
@@ -57,10 +58,11 @@ public class NewTicket extends JFrame implements ActionListener
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		this.setVisible(true);
+		
 		this.initializeGUI();
 
-		this.setVisible(true);
+		
 	}//End of constructor
 
 	/**
@@ -78,13 +80,14 @@ public class NewTicket extends JFrame implements ActionListener
 		{
 			db = new Database();
 			shows = db.loadShows();
+			
+			this.setVisible(true);
 		}//End of try
 		catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(this, "An error occured querying the database. Unable to list available shows.\n\nIf this problem continues, please contact your system administrator", "Database Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);
 
 			//Close the frame
-			this.setVisible(false);
 			this.dispose();
 		}//End of catch
 
@@ -201,11 +204,15 @@ public class NewTicket extends JFrame implements ActionListener
 		//Buttons Panel
 		this.buttonsPanel = new JPanel(new GridLayout(1, 6, 5, 5));
 
+		this.cmdCancel = new JButton("Cancel");
+		this.cmdCancel.addActionListener(this);
+		this.cmdCancel.setActionCommand("cancel");
+
 		this.cmdDone = new JButton("Done");
 		this.cmdDone.addActionListener(this);
 		this.cmdDone.setActionCommand("done");
 
-		this.buttonsPanel.add(new JLabel(""));
+		this.buttonsPanel.add(this.cmdCancel);
 		this.buttonsPanel.add(new JLabel(""));
 		this.buttonsPanel.add(new JLabel(""));
 		this.buttonsPanel.add(new JLabel(""));
@@ -247,9 +254,9 @@ public class NewTicket extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent evt)
 	{
 		if (evt.getActionCommand().equals("done"))
-		{
 			createNewUser();
-		}
+		else if (evt.getActionCommand().equals("cancel"))
+			this.dispose();
 	}//End of actionPerformed method
 
 	/**
