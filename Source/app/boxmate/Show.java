@@ -1,6 +1,24 @@
 package app.boxmate;
 
+import app.util.*;
 import java.util.ArrayList;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import org.xml.sax.SAXException;
 
 /**
  * This class represents a show that is being played at certain venue.  Customers can purchase tickets or rate it. Managers can create instances of a show and edit its details.
@@ -54,6 +72,13 @@ public class Show
 	private double ranking;
 
 	/**
+	 * The price for a ticket to this show.
+	 *
+	 * @since 1.0.0
+	 */
+	private double price;
+
+	/**
 	 * The default constructor for the Show class. It will assign all the values of the attributes to default values.
 	 *
 	 * @since 1.0.0
@@ -66,6 +91,7 @@ public class Show
     	this.showings = new ArrayList<Showing>();
     	this.rating = Rating.G;
     	this.ranking = 0.0;
+    	this.price = 0.0;
     }//End of default constructor
 
     /**
@@ -87,6 +113,7 @@ public class Show
     	this.showings = showings;
     	this.rating = rating;
     	this.ranking = ranking;
+    	this.price = 0.0;
     }//End of object constructor
 
 
@@ -153,6 +180,16 @@ public class Show
 	{
 		return this.ranking;
 	}//End of getRanking method
+
+	/**
+	 * Gets the value of price.
+	 *
+	 * @return The value of price.
+	 */
+	public double getPrice()
+	{
+		return this.price;
+	}//End of getPrice method
 
 	/***************************
 	 * END OF ACCESSOR METHODS *
@@ -223,32 +260,260 @@ public class Show
 		this.ranking = ranking;
 	}//End of setRanking method
 
+	/**
+	 * Sets the value of price.
+	 *
+	 * @param price The new value for price.
+	 */
+	public void setPrice(double price)
+	{
+		this.price = price;
+	}//End of setPrice method
+
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
+
+	/*
+	 * Sorts an <code>ArrayList</code> of <code>Showing</code> objects in chronological order. This method
+	 * should be called every time a changes is made to the <code>Showing</code> list.
+	 *
+	 * @since 1.0.0
+	 */
+	public void sortShowings()
+	{
+		Showing [] sorted = new Showing[showings.size()];
+
+	 	for (int x = 0; x < sorted.length; x++)
+	 	{
+	 		sorted[x] = showings.get(x);
+	 	}
+
+	 	for (int index = 1; index < sorted.length; index++)
+		{
+			Showing key = sorted[index];
+			int position = index;
+
+			while (position > 0)
+			{
+				int equalityA = sorted[position-1].getDate().compareTo(key.getDate());
+
+				if (equalityA == 0)
+				{
+					int equalityB = sorted[position-1].getTime().compareTo(key.getTime());
+					if (equalityB > 0)
+					{
+							sorted[position] = sorted[position-1];
+							position--;
+					}
+					else
+					{
+						break;
+					}
+				}
+				else if (equalityA > 0)
+				{
+					sorted[position] = sorted[position-1];
+					position--;
+				}
+				else
+				{
+					break;
+				}
+			}
+			sorted[position] = key;
+		}
+
+		showings.clear();
+		for (Showing s : sorted)
+		{
+			showings.add(s);
+		}
+	}//End of sortShowings method
 
 	/**
 	 * Returns the total sales from this show or production.
 	 *
 	 * @return The total amount of sales from the production.
 	 * @since 1.0.0
-	 * @todo Implement.
 	 */
-	 public double calculateSales()
-	 {
-	 	return 0.0;
-	 }//End of calculateSales method
+	public double calculateSales()
+	{
+		double revenue = 0.0;
+
+		for (Showing s : showings)
+		{
+			revenue += price * s.getTickets().size();
+		}
+
+		return revenue;
+	}//End of calculateSales method
 
     /**
 	 * Shows a certain statistic related to the show.
 	 *
 	 * @param statType The statistic to display.
+	 * @return The desired statistic.
 	 * @since 1.0.0
 	 * @todo Implement.
 	 */
-	 public void showStat(Statistics statType)
-	 {
-	 }//End of showStat method
+	public double showStat(Statistics statType) throws Exception
+	{
+		switch(statType)
+		{
+			case AVG_DISTANCE:				return avgDistancePerCustomer();
+			case AVG_TICKET_PER_CUSTOMER:	return avgTicketPerCustomer();
+			default:						return 0.0;
+		}
+	}//End of showStat method
+
+	/**
+	 * Find the average distance travelled to get to the show per customer.
+	 *
+	 * @return The average distance.
+	 *
+	 * @since 1.0.0
+	 */
+	private double avgDistancePerCustomer()
+	{
+		try
+		{
+			ArrayList<Customer> checked = new ArrayList<Customer>();
+			double [] coordsA;
+			double [] coordsB;
+
+			double avgDistance = 0.0;
+
+			for (Showing s : showings)
+			{
+				coordsA = findEarthCoords(s.getTheatre().getAddress().normalize());
+
+				for (Ticket t : s.getTickets())
+				{
+					if (checked.indexOf(t.getCustomer()) < 0)
+					{
+						checked.add(t.getCustomer());
+						coordsB = findEarthCoords(t.getCustomer().getAddress().normalize());
+						avgDistance += calcDistance(coordsA[0], coordsA[1], coordsB[0], coordsB[1]);
+					}
+				}
+			}
+
+			avgDistance /= checked.size();
+
+			return avgDistance;
+		}
+		catch (Exception e)
+		{
+			return Double.NaN;
+		}
+	}
+
+	/**
+	 * Return the latitude and longitude of a location.
+	 *
+	 * @param address The address in question.
+	 * @return The latitude and longitude. (index 0 = latitude, index 1 = longitude)
+	 *
+	 * @since 1.0.0
+	 */
+	private double [] findEarthCoords(String address) throws IOException, XPathExpressionException, ParserConfigurationException, SAXException
+	{
+ 		final String GEOCODER_REQUEST_PREFIX_FOR_XML = "http://maps.google.com/maps/api/geocode/xml";
+
+    	double [] coords = {Double.NaN, Double.NaN};
+
+    	//Query address
+ 		URL url = new URL(GEOCODER_REQUEST_PREFIX_FOR_XML + "?address=" + URLEncoder.encode(address, "UTF-8") + "&sensor=false");
+
+ 		//Prepare an HTTP connection to the geocoder
+ 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+ 		Document geocoderResultDocument = null;
+    	try
+    	{
+    		//Open the connection and get results as InputSource.
+    		conn.connect();
+    		InputSource geocoderResultInputSource = new InputSource(conn.getInputStream());
+
+    		//Read result and parse into XML Document
+    		geocoderResultDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
+    	}
+    	finally
+    	{
+      		conn.disconnect();
+      	}
+
+		//Prepare XPath
+      	XPath xpath = XPathFactory.newInstance().newXPath();
+
+      	//Extract the result
+      	NodeList resultNodeList = null;
+
+      	//Extract the coordinates of the first result
+    	resultNodeList = (NodeList) xpath.evaluate("/GeocodeResponse/result[1]/geometry/location/*", geocoderResultDocument, XPathConstants.NODESET);
+
+    	for(int i = 0; i < resultNodeList.getLength(); i++)
+    	{
+    		Node node = resultNodeList.item(i);
+
+    		if("lat".equals(node.getNodeName()))
+    			coords[0] = Double.parseDouble(node.getTextContent());
+
+    		if("lng".equals(node.getNodeName()))
+    			coords[1] = Double.parseDouble(node.getTextContent());
+    	}
+
+    	return coords;
+	}//End of findEarthCoords method
+
+	/**
+	 * Return the distance between two points on the globe.
+	 *
+	 * @param latA The latitude of the first address.
+	 * @param longA The longitude of the first address.
+	 * @param latB The latitude of the second address.
+	 * @param longB The longitude of the second address.
+	 * @return The distance between both points.
+	 *
+	 * @since 1.0.0
+	 */
+	private double calcDistance(double latA, double longA, double latB, double longB)
+	{
+		double distance = 0.0;
+
+		distance = (Math.sin(Math.toRadians(latA)) * Math.sin(Math.toRadians(latB)) + Math.cos(Math.toRadians(latA)) * Math.cos(Math.toRadians(latB)) * Math.cos(Math.toRadians(longA - longB)));
+		distance = (Math.toDegrees(Math.acos(distance))) * 111.189577;
+
+		return distance;
+	}//End of calcDistance method
+
+	/**
+	 * Find the average amount of tickets bought per customer.
+	 *
+	 * @return The average amount of tickets bought per customer.
+	 *
+	 * @since 1.0.0
+	 */
+	private double avgTicketPerCustomer()
+	{
+		ArrayList<Customer> checked = new ArrayList<Customer>();
+		int customerCount = 0;
+		int ticketCount = 0;
+
+		for (Showing s : showings)
+		{
+			for (Ticket t : s.getTickets())
+			{
+				ticketCount++;
+
+				if (checked.indexOf(t.getCustomer()) < 0)
+					checked.add(t.getCustomer());
+			}
+		}
+
+		return ticketCount / checked.size();
+	}//End of avgTicketPerCustomer method
 
     /**
 	 * Returns a string representation of the object.
@@ -263,16 +528,16 @@ public class Show
 
 		output += "--------------------------------\n";
 		output += name;
-		output += "--------------------------------\n";
-		output += description;
+		output += "\n--------------------------------\n";
+		output += description + "\n";
 
 		output += "\nPRODUCTION MEMBERS:\n";
 		for (String member : productionMembers)
 			output += member + "\n";
 
-		output += "SHOWINGS:\n";
+		output += "\nSHOWINGS:\n";
 		for (Showing x : showings)
-			output += x.toString() + "\n";
+			output += x.toString();
 
 		output += "Rated " + rating + "\n";
 		output += "Avg. Rank: " + ranking;

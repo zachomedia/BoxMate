@@ -1,6 +1,9 @@
 package app.boxmate;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.sql.Time;
+
 
 /**
  * This class is contains a list of all the shows currently playing or which are to be played.  It also contains associated functionality in organizing this list of shows.
@@ -36,6 +39,8 @@ public class ShowRoster
 	 */
     public ShowRoster(Show [] shows)
     {
+    	this.shows = new ArrayList<Show>();
+
     	for (Show x : shows)
     	{
     		this.shows.add(x);
@@ -84,18 +89,26 @@ public class ShowRoster
 	 */
 	public ShowRoster sort(SortTypes sortType)
 	{
-		if (sortType == SortTypes.NAME)
-			return sortByName();
-		else if (sortType == SortTypes.DESCRIPTION)
-			return sortByDescription();
-		else if (sortType == SortTypes.NEXT_SHOWING)
-			return sortByNextShowing();
-		else if (sortType == SortTypes.RATING)
-			return sortByRating ();
-		else if (sortType == SortTypes.RANKING)
-			return sortByRanking();
-		else
-			return this;
+		switch (sortType)
+		{
+			case NAME:			return sortByName();
+								break;
+										
+			case DESCRIPTION:	return sortByDescription();
+								break;
+																		
+			case NEXT_SHOWING:	return sortByNextShowing();
+								break;
+										
+			case RATING:		return sortByRating();
+								break;
+									
+			case RANKING:		return sortByRanking();
+								break;
+										
+			default:			return this;
+								break;
+		}
 	}//End of sort method
 
 	/**
@@ -107,7 +120,22 @@ public class ShowRoster
 	 */
 	private ShowRoster sortByName()
 	{
-		return this;
+		Show [] sorted = this.toArray();
+
+		for (int index = 1; index < sorted.length; index++)
+		{
+			Show key = sorted[index];
+			int position = index;
+
+			while (position > 0 && sorted[position-1].getName().compareTo(key.getName()) > 0)
+			{
+				sorted[position] = sorted[position-1];
+				position--;
+			}
+			sorted[position] = key;
+		}
+
+		return new ShowRoster(sorted);
 	}//End of sortByName method
 
 	/**
@@ -119,7 +147,22 @@ public class ShowRoster
 	 */
 	private ShowRoster sortByDescription()
 	{
-		return this;
+		Show [] sorted = this.toArray();
+
+		for (int index = 1; index < sorted.length; index++)
+		{
+			Show key = sorted[index];
+			int position = index;
+
+			while (position > 0 && sorted[position-1].getDescription().compareTo(key.getDescription()) > 0)
+			{
+				sorted[position] = sorted[position-1];
+				position--;
+			}
+			sorted[position] = key;
+		}
+
+		return new ShowRoster(sorted);
 	}//End of sortByDescription method
 
 	/**
@@ -131,7 +174,44 @@ public class ShowRoster
 	 */
 	private ShowRoster sortByNextShowing()
 	{
-		return this;
+		Show [] sorted = this.toArray();
+
+		for (int index = 1; index < sorted.length; index++)
+		{
+			Show key = sorted[index];
+			int position = index;
+
+			while (position > 0)
+			{
+				int equalityA = sorted[position-1].getShowings().get(0).getDate().compareTo(key.getShowings().get(0).getDate());
+
+				if (equalityA == 0)
+				{
+					int equalityB = sorted[position-1].getShowings().get(0).getTime().compareTo(key.getShowings().get(0).getTime());
+					if (equalityB > 0)
+					{
+							sorted[position] = sorted[position-1];
+							position--;
+					}
+					else
+					{
+						break;
+					}
+				}
+				else if (equalityA > 0)
+				{
+					sorted[position] = sorted[position-1];
+					position--;
+				}
+				else
+				{
+					break;
+				}
+			}
+			sorted[position] = key;
+		}
+
+		return new ShowRoster(sorted);
 	}//End of sortByNextShowing method
 
 	/**
@@ -143,7 +223,22 @@ public class ShowRoster
 	 */
 	private ShowRoster sortByRating()
 	{
-		return this;
+		Show [] sorted = this.toArray();
+
+		for (int index = 1; index < sorted.length; index++)
+		{
+			Show key = sorted[index];
+			int position = index;
+
+			while (position > 0 && sorted[position-1].getRating().compareTo(key.getRating()) > 0)
+			{
+				sorted[position] = sorted[position-1];
+				position--;
+			}
+			sorted[position] = key;
+		}
+
+		return new ShowRoster(sorted);
 	}//End of sortByRating method
 
 	/**
@@ -155,7 +250,22 @@ public class ShowRoster
 	 */
 	private ShowRoster sortByRanking()
 	{
-		return this;
+		Show [] sorted = this.toArray();
+
+		for (int index = 1; index < sorted.length; index++)
+		{
+			Show key = sorted[index];
+			int position = index;
+
+			while (position > 0 && sorted[position-1].getRanking() < key.getRanking())
+			{
+				sorted[position] = sorted[position-1];
+				position--;
+			}
+			sorted[position] = key;
+		}
+
+		return new ShowRoster(sorted);
 	}//End of sortByRanking method
 
 	/********************
@@ -208,7 +318,7 @@ public class ShowRoster
 
     	for (Show x : shows)
     	{
-    		output += shows.toString();
+    		output += x.toString() + "\n";
     	}//End of for
 
     	return output;
@@ -231,4 +341,38 @@ public class ShowRoster
 
     	return showArray;
     }//End of toArray method
+
+    //Test harness
+    public static void main(String [] args) {
+    	ArrayList<Showing> testShowing = new ArrayList<Showing>();
+    	Showing testee = new Showing();
+    	testee.setDate(new Date(8000000));
+    	testee.setTime(new Time(10000));
+    	testShowing.add(testee);
+
+    	ArrayList<Showing> testShowing2 = new ArrayList<Showing>();
+    	Showing testee2 = new Showing();
+    	testee2.setDate(new Date(6000000));
+    	testee2.setTime(new Time(5000));
+    	testShowing2.add(testee2);
+
+    	ArrayList<String> prods = new ArrayList<String>();
+    	prods.add("Director: Stephen Harper");
+    	Show showA = new Show("Sweeny Todd", "The demon barber of Fleet Street.", prods, testShowing2, Rating.A14, 4.6);
+    	Show showB = new Show("Beauty and the Beast", "A Disney fairy tale.", prods, testShowing, Rating.PG, 4.7);
+
+    	ShowRoster test = new ShowRoster();
+
+    	test.addShow(showA);
+    	test.addShow(showB);
+    	
+    	Show showC = new Show("Alice in Wonderland", "Lewis Carroll's beloved story.", prods, testShowing, Rating.G, 4.3);
+    	showC.sortShowings();
+
+    	test.addShow(showC);
+
+    	test = test.sort(SortTypes.RATING);
+
+    	System.out.println(test.toString());
+    }//End of main method
 }//End of class

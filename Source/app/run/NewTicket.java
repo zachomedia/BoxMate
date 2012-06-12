@@ -30,7 +30,7 @@ public class NewTicket extends JFrame implements ActionListener
 		private JTextField txtLastName;
 		private JTextField txtAddressHouseNumber;
 		private JTextField txtAddressStreet;
-		private JTextField txtAddressStreetSufix;
+		private JTextField txtAddressStreetSuffix;
 		private JTextField txtAddressCity;
 		private JComboBox cboAddressProvince;
 		private JTextField txtAddressPostalCode;
@@ -128,7 +128,7 @@ public class NewTicket extends JFrame implements ActionListener
 		this.txtLastName = new JTextField(15);
 		this.txtAddressHouseNumber = new JTextField(5);
 		this.txtAddressStreet = new JTextField(15);
-		this.txtAddressStreetSufix = new JTextField(5);
+		this.txtAddressStreetSuffix = new JTextField(5);
 		this.txtAddressCity = new JTextField(15);
 		this.cboAddressProvince = new JComboBox(PROVINCES);
 		this.txtAddressPostalCode = new JTextField(8);
@@ -156,7 +156,7 @@ public class NewTicket extends JFrame implements ActionListener
 		JPanel addressFields = new JPanel(new BorderLayout());
 		addressFields.add(this.txtAddressHouseNumber, BorderLayout.WEST);
 		addressFields.add(this.txtAddressStreet, BorderLayout.CENTER);
-		addressFields.add(this.txtAddressStreetSufix, BorderLayout.EAST);
+		addressFields.add(this.txtAddressStreetSuffix, BorderLayout.EAST);
 
 		secondRow.add(addressFields);
 
@@ -309,8 +309,8 @@ public class NewTicket extends JFrame implements ActionListener
 			return;
 		}//End of else
 
-		if (txtAddressStreetSufix.getText().length() != 0)
-			address.setStreetSufix(txtAddressStreetSufix.getText());
+		if (txtAddressStreetSuffix.getText().length() != 0)
+			address.setStreetSuffix(txtAddressStreetSuffix.getText());
 		else
 		{
 			JOptionPane.showMessageDialog(this, "Please enter the street suffix.", "Customer Error | " + Application.NAME, JOptionPane.ERROR_MESSAGE);

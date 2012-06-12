@@ -178,9 +178,9 @@ public class Theatre
     	String output = "";
 
     	output += "[";
-    	output += "Name: " + name + ",";
-    	output += "Address: " + address + ",";
-    	output += "# Rows: " + rows + ",";
+    	output += "Name: " + name + ", ";
+    	output += "Address: " + address + ", ";
+    	output += "# Rows: " + rows + ", ";
     	output += "# Seats Per Row: " + Arrays.toString(seatsPerRow);
     	output += "]";
 

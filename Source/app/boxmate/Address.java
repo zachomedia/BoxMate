@@ -11,46 +11,53 @@ package app.boxmate;
  {
 	/**
 	 * The house number.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private int houseNumber;
-	
+
 	/**
 	 * The street name.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private String streetName;
-	
+
 	/**
 	 * The street sufix (Ex. Street).
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
-	private String streetSufix;
-	
+	private String streetSuffix;
+
+	/**
+	 * The city.
+	 *
+	 * @since 1.0.0
+	 */
+	private String city;
+
 	/**
 	 * The province.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private String province;
-	
+
 	/**
 	 * The country.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private String country;
-	
+
 	/**
 	 * The postal code (or ZIP Code if you are in the United States).
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	private String postalCode;
-	
+
 	/**
 	 * Default constructor for an Address object.
 	 *
@@ -61,40 +68,43 @@ package app.boxmate;
 		//Intialize all the instance variables.
 		this.houseNumber = 0;
 		this.streetName = "";
-		this.streetSufix = "";
+		this.streetSuffix = "";
+		this.city = "";
 		this.province = "";
 		this.country = "";
 		this.postalCode = "";
 	}//End of constructor method
-	
+
 	/**
 	 * Constructs a Address number with all the provided information.
 	 *
 	 * @param houseNumber The house number.
 	 * @param streetName The street name.
-	 * @param streetSufix The street sufix.
+	 * @param streetSuffix The street suffix.
+	 * @param city The city.
 	 * @param province The province.
 	 * @param country The country.
 	 * @param postalCode The postal code.
 	 *
 	 * @since 1.0.0
 	 */
-	public Address(int houseNumber, String streetName, String streetSufix, String province, String country, String postalCode)
+	public Address(int houseNumber, String streetName, String streetSufix, String city, String province, String country, String postalCode)
 	{
 		//Intialize all the instance variables.
 		this.houseNumber = houseNumber;
 		this.streetName = streetName;
-		this.streetSufix = streetSufix;
+		this.streetSuffix = streetSuffix;
+		this.city = city;
 		this.province = province;
 		this.country = country;
 		this.postalCode = postalCode;
 	}//End of constructor method
-	
-		
+
+
 	/********************
 	 * ACCESSOR METHODS *
 	 ********************/
-	
+
 	/**
 	 * Gets the value of houseNumber.
 	 *
@@ -104,7 +114,7 @@ package app.boxmate;
 	{
 		return this.houseNumber;
 	}//End of getHouseNumber method
-	
+
 	/**
 	 * Gets the value of streetName.
 	 *
@@ -114,17 +124,27 @@ package app.boxmate;
 	{
 		return this.streetName;
 	}//End of getStreetName method
-	
+
 	/**
-	 * Gets the value of streetSufix.
+	 * Gets the value of streetSuffix.
 	 *
-	 * @return The value of streetSufix.
+	 * @return The value of streetSuffix.
 	 */
-	public String getStreetSufix()
+	public String getStreetSuffix()
 	{
-		return this.streetSufix;
+		return this.streetSuffix;
 	}//End of getStreetSufix method
-	
+
+	/**
+	 * Gets the value of city.
+	 *
+	 * @return The value of city.
+	 */
+	public String getCity()
+	{
+		return this.city;
+	}//End of getCity method
+
 	/**
 	 * Gets the value of province.
 	 *
@@ -134,7 +154,7 @@ package app.boxmate;
 	{
 		return this.province;
 	}//End of getProvince method
-	
+
 	/**
 	 * Gets the value of country.
 	 *
@@ -144,7 +164,7 @@ package app.boxmate;
 	{
 		return this.country;
 	}//End of getCountry method
-	
+
 	/**
 	 * Gets the value of postalCode.
 	 *
@@ -154,16 +174,16 @@ package app.boxmate;
 	{
 		return this.postalCode;
 	}//End of getPostalCode method
-	
+
 	/***************************
 	 * END OF ACCESSOR METHODS *
 	 ***************************/
 
-		
+
 	/*******************
 	 * MUTATOR METHODS *
 	 *******************/
-	
+
 	/**
 	 * Sets the value of houseNumber.
 	 *
@@ -173,7 +193,7 @@ package app.boxmate;
 	{
 		this.houseNumber = houseNumber;
 	}//End of setHouseNumber method
-	
+
 	/**
 	 * Sets the value of streetName.
 	 *
@@ -183,17 +203,27 @@ package app.boxmate;
 	{
 		this.streetName = streetName;
 	}//End of setStreetName method
-	
+
 	/**
-	 * Sets the value of streetSufix.
+	 * Sets the value of streetSuffix.
 	 *
-	 * @param streetSufix The new value for streetSufix.
+	 * @param streetSufix The new value for streetSuffix.
 	 */
-	public void setStreetSufix(String streetSufix)
+	public void setStreetSuffix(String streetSuffix)
 	{
-		this.streetSufix = streetSufix;
-	}//End of setStreetSufix method
-	
+		this.streetSuffix = streetSuffix;
+	}//End of setStreetSuffix method
+
+	/**
+	 * Sets the value of city.
+	 *
+	 * @param city The new value for city.
+	 */
+	public void setCity(String city)
+	{
+		this.city = city;
+	}//End of setCity method
+
 	/**
 	 * Sets the value of province.
 	 *
@@ -203,7 +233,7 @@ package app.boxmate;
 	{
 		this.province = province;
 	}//End of setProvince method
-	
+
 	/**
 	 * Sets the value of country.
 	 *
@@ -213,7 +243,7 @@ package app.boxmate;
 	{
 		this.country = country;
 	}//End of setCountry method
-	
+
 	/**
 	 * Sets the value of postalCode.
 	 *
@@ -223,15 +253,34 @@ package app.boxmate;
 	{
 		this.postalCode = postalCode;
 	}//End of setPostalCode method
-	
+
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
+	/**
+	 * Returns the address in standard notation
+	 *
+	 * @return The normalized address.
+	 *
+	 * @since 1.0.0
+	 */
+	public String normalize()
+	{
+		//Declare and intialize a variable
+		String address = "";
 
-	
+		//Create the String representation
+		address += this.houseNumber + " " + this.streetName + " " + this.streetSuffix + ", ";
+		address += this.city + ", " + this.province + ", " + this.country + " ";
+		address += this.postalCode;
+
+		//Return the String representation
+		return address;
+	}//End of normalize method
+
 	/**
 	 * Returns a String representation of the address.
-	 * 
+	 *
 	 * @return The Address object respresented as a String.
 	 *
 	 * @since 1.0.0
@@ -240,17 +289,18 @@ package app.boxmate;
 	{
 		//Declare and intialize a variable
 		String address = "";
-		
-		//Create the String representation		
+
+		//Create the String representation
 		address += "[";
-		
+
 		address += "HOUSE NUMBER : '" + this.houseNumber + "', ";
 		address += "STREET NAME : '" + this.streetName + "', ";
-		address += "STREET SUFIX : '" + this.streetSufix + "', ";
+		address += "STREET SUFFIX : '" + this.streetSuffix + "', ";
+		address += "CITY : '" + this.city + "', ";
 		address += "PROVINCE : '" + this.province + "', ";
 		address += "COUNTRY : '" + this.country + "', ";
 		address += "POSTAL CODE : '" + this.postalCode + "'";
-		
+
 		address += "]";
 
 		//Return the String representation

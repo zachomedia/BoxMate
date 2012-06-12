@@ -8,8 +8,12 @@ package app.boxmate;
  * @since 1.0.0
  */
 public enum Statistics {
-    /**
-	 * The age demographic that attends a show.
+	/**
+	 * The average distance travelled per customer.
 	 */
-    AGE_DEMO
+    AVG_DISTANCE
+    /**
+	 * The average amount of tickets bought per customer.
+	 */
+    AVG_TICKET_PER_CUSTOMER
 }//End of enum
