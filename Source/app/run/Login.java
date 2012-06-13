@@ -55,7 +55,7 @@ public class Login extends JFrame implements ActionListener
 
 		//Initialize the left side
 		ImageIcon imgLogo = new ImageIcon("P:/Final Project/Project/BoxMate/Build/app/images/logo.png");
-		
+
 		this.lblLogo = new JLabel(imgLogo);
 		this.lblLogo.setHorizontalAlignment(JLabel.CENTER);
 
@@ -65,35 +65,35 @@ public class Login extends JFrame implements ActionListener
 		SpringLayout rightSideLayout = new SpringLayout();
 		JPanel rightSidePanel = new JPanel(rightSideLayout);
 		rightSidePanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 20));
-		
+
 		JPanel loginPanel = new JPanel(new GridLayout(5, 1, 5, 5));
-		
+
 		this.txtUsername = new JTextField();
 		this.txtPassword = new JPasswordField();
 		this.cmdLogin = new JButton("Login");
 		this.cmdLogin.addActionListener(this);
-		
+
 		loginPanel.add(new JLabel("Username"));
 		loginPanel.add(this.txtUsername);
 		loginPanel.add(new JLabel("Password"));
 		loginPanel.add(this.txtPassword);
-		
+
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
 		buttonPanel.add(new JLabel());
 		buttonPanel.add(new JLabel());
 		buttonPanel.add(this.cmdLogin);
-		
+
 		loginPanel.add(buttonPanel);
-		
+
 		//Position the elements
 		rightSideLayout.putConstraint(SpringLayout.VERTICAL_CENTER, loginPanel, 0, SpringLayout.VERTICAL_CENTER, rightSidePanel);
 		//rightSideLayout.putConstraint(SpringLayout.SOUTH, loginPanel, 0, SpringLayout.SOUTH, rightSidePanel);
 		rightSideLayout.putConstraint(SpringLayout.WEST, loginPanel, 0, SpringLayout.WEST, rightSidePanel);
 		rightSideLayout.putConstraint(SpringLayout.EAST, loginPanel, 0, SpringLayout.EAST, rightSidePanel);
 
-		
+
 		rightSidePanel.add(loginPanel);
-		
+
 		this.add(rightSidePanel);
 	}//End of initializeGUI method
 
@@ -105,18 +105,29 @@ public class Login extends JFrame implements ActionListener
 	 * @since 1.0.0
 	 */
 	public void actionPerformed(ActionEvent event)
-	{	
+	{
 		Object trigerObject = event.getSource();
 
 		if (trigerObject == this.cmdLogin)
 		{
-			if (txtUsername.getText().equals("boxmate") && new String(txtPassword.getPassword()).equals("password"))
+			try
 			{
-				new Dashboard();
-				this.dispose();
+				Database db = new Database();
+
+				if (db.usernameExists(txtUsername.getText()))
+				{
+					Session.login(txtUsername.getText());
+
+					new Dashboard();
+					this.dispose();
+				}
+				else
+					JOptionPane.showMessageDialog(this, "No account matched the provided username and/or password.", Application.NAME, JOptionPane.WARNING_MESSAGE);
 			}
-			else
-				JOptionPane.showMessageDialog(this, "No account matched the provided username and/or password.", Application.NAME, JOptionPane.WARNING_MESSAGE);
+			catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(this, "An error occured querying the database.", Application.NAME, JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		else
 			JOptionPane.showMessageDialog(this, "This option is temporarily unavailable.", Application.NAME, JOptionPane.INFORMATION_MESSAGE);

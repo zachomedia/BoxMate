@@ -174,4 +174,25 @@ public class Database
 		//Execute the update
 		query.executeUpdate();
 	}//End of writeShow method
+
+	/**
+	 * Sees if a username exists in the database.
+	 *
+	 * @param username The username to check for existance.
+	 * @return Wheter a username exists in the database.
+	 *
+	 * @since 1.0.0
+	 */
+	public boolean usernameExists(String username) throws Exception
+	{
+		PreparedStatement query = database.getPreparedStatement("SELECT username FROM users WHERE username=?");
+		query.setString(1, username);
+
+		ResultSet results = query.executeQuery();
+
+		if (results.last())
+			return true;
+		else
+			return false;
+	}//End of usernameExists method
 }//End of class

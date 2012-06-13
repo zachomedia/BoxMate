@@ -58,7 +58,7 @@ public class Dashboard extends JFrame implements ActionListener
 
 		//Initialize the left side
 		ImageIcon imgLogo = new ImageIcon("P:/Final Project/Project/BoxMate/Build/app/images/logo.png");
-		
+
 		this.lblLogo = new JLabel(imgLogo);
 		this.lblLogo.setHorizontalAlignment(JLabel.CENTER);
 
@@ -138,11 +138,18 @@ public class Dashboard extends JFrame implements ActionListener
 	 * @since 1.0.0
 	 */
 	public void actionPerformed(ActionEvent event)
-	{	
+	{
 		Object trigerObject = event.getSource();
 
 		if (trigerObject == this.cmdNewTicket)
 			new NewTicket();
+		else if (trigerObject == this.cmdLogout)
+		{
+			Session.logout();
+
+			new Login();
+			this.dispose();
+		}
 		else
 			JOptionPane.showMessageDialog(this, "This option is temporarily unavailable.", Application.NAME, JOptionPane.INFORMATION_MESSAGE);
 	}//End of actionPerformed method
