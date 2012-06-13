@@ -68,7 +68,7 @@ public class MainProgram
         }//End of catch
 
 	
-		new Dashboard();
+		new Login();
 
 		//Database db = new Database();
 		//db.writeUser(new Customer("zseguin", "password", 10, "Zachary", "Seguin", new Address(429, "Cardigan", "Place", "London", "Ontario", "N6M 1J6"), "zseguin@me.com", new PhoneNumber(519, 668, 3141), new CreditCard(), new ArrayList<Ticket>()));

@@ -105,7 +105,7 @@ public class Show
 	 * @param ranking The average of all users’ rankings of the show or production, out of 5.
 	 * @since 1.0.0
 	 */
-    public Show(String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking)
+    public Show(String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking, double price)
     {
     	this.name = name;
     	this.description = description;
@@ -113,7 +113,7 @@ public class Show
     	this.showings = showings;
     	this.rating = rating;
     	this.ranking = ranking;
-    	this.price = 0.0;
+    	this.price = price;
     }//End of object constructor
 
 

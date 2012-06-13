@@ -166,7 +166,7 @@ public class Ticket
 			content += "<div style='padding: 10px 15px; margin: 20px; border: 1px dotted #acacac'><h3 style='color: #4c4c4c'>" + this.show.getName() + "</h3>";
 			content += "<p style='color: #6c6c6c;'>" + this.show.getDescription() + "</p></div>";
 
-			content += "<h3 style='text-decoration: underline; font-weight: bold;'>Ticket Information</h3>";
+			content += "<h3 style='text-decoration: underline; font-weight: bold; color: black;'>Ticket Information</h3>";
 			content += PARAGRAPH + "Ticket Number:</b> " + String.valueOf(this.ID) + "</p>";
 			content += PARAGRAPH + "Show:</b> " + this.show.getName() + "</p>";
 			content += PARAGRAPH + "Date/Time:</b> " + this.showing.getDate().toString() + " at " + this.showing.getTime().toString() + "</p>";
@@ -174,7 +174,7 @@ public class Ticket
 			content += PARAGRAPH + "Row:</b> " + this.row + "</p>";
 			content += PARAGRAPH + "Seat:</b> " + this.seat + "</p>";
 
-			content += "<h3 style='text-decoration: underline; font-weight: bold;'>Theatre Information</h3>";
+			content += "<h3 style='text-decoration: underline; font-weight: bold; color: black;'>Theatre Information</h3>";
 			content += PARAGRAPH + "Name:</b> " + this.showing.getTheatre().getName() + "</p>";
 			content += PARAGRAPH + "Address:</b> " + this.showing.getTheatre().getAddress().normalize() + "</p>";
 			content += PARAGRAPH + "Phone:</b> " + this.showing.getTheatre().getPhoneNumber().toString() + "</p>";
@@ -386,8 +386,8 @@ public class Ticket
     		"zachary.seguin",
     		"NoPassword",
     		10,
-    		"Zachary",
-    		"Seguin",
+    		"Jonathan",
+    		"Tan",
     		new Address(429, "Cardigan", "Place", "London", "Ontario", "Canada", "N6M 1J6"),
     		"zseguin@me.com",
     		new PhoneNumber(519, 668, 3141),
@@ -401,7 +401,8 @@ public class Ticket
     		new ArrayList<String>(),
     		showings,
     		Rating.G,
-    		1.0
+    		1.0,
+    		25.0
     	);
 
     	Ticket ticket = new Ticket(
@@ -413,6 +414,6 @@ public class Ticket
     		1
     	);
 
-    	ticket.email();
+    	ticket.email("jontan_@hotmail.com");
     }
 }//End of class

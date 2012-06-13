@@ -84,8 +84,10 @@ public class Dashboard extends JFrame implements ActionListener
 		rightSidePanel.add(firstRow);
 
 		//Initialize the SHOWS row
-		JPanel showsPanel = new JPanel();
+		JPanel showsPanel = new JPanel(new GridLayout(1, 1, 15, 15));
 		showsPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Shows"), BorderFactory.createEmptyBorder(5,5,5,5)));
+
+		showsPanel.add(new JLabel("Shows are coming soon!"));
 
 		rightSidePanel.add(showsPanel);
 
@@ -136,7 +138,7 @@ public class Dashboard extends JFrame implements ActionListener
 	 * @since 1.0.0
 	 */
 	public void actionPerformed(ActionEvent event)
-	{
+	{	
 		Object trigerObject = event.getSource();
 
 		if (trigerObject == this.cmdNewTicket)
