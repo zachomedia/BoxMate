@@ -11,6 +11,8 @@ public class StatsTester
 {
     public static void main(String [] args) throws Exception
     {
+    	/* SEE SORTTESTER FOR MORE INFORMATION ABOUT THIS COMMENT!
+
     	Address jonsAddress = new Address(209, "Oldham", "Street", "London", "ON", "Canada", "N5Z5E2");
     	Address laurier = new Address(450, "Millbank", "Drive", "London", "ON", "Canada", "");
 
@@ -33,6 +35,6 @@ public class StatsTester
 
     	System.out.println(show.calculateSales());
     	System.out.println(show.showStat(Statistics.AVG_DISTANCE));
-    	System.out.println(show.showStat(Statistics.AVG_TICKET_PER_CUSTOMER));
+    	System.out.println(show.showStat(Statistics.AVG_TICKET_PER_CUSTOMER));*/
     }//End of main method
 }//End of class

@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * This class represents a venue for a showing.
  *
- * @author Jonathan Tan
+ * @author Jonathan Tan and Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
@@ -24,6 +24,27 @@ public class Theatre
 	 * @since 1.0.0
 	 */
 	private Address address;
+
+	/**
+	 * The address of the theatre.
+	 *
+	 * @since 1.0.0
+	 */
+	private PhoneNumber phoneNumber;
+
+	/**
+	 * An email address to contact the theatre.
+	 *
+	 * @since 1.0.0
+	 */
+	private String emailAddress;
+
+	/**
+	 * The theatre's website.
+	 *
+	 * @since 1.0.0
+	 */
+	private String website;
 
 	/**
 	 * The number of rows in the theatre.
@@ -48,6 +69,9 @@ public class Theatre
     {
     	this.name = "Generic Theatre";
     	this.address = new Address();
+    	this.phoneNumber = new PhoneNumber();
+    	this.emailAddress = "";
+    	this.website = "";
     	this.rows = 0;
     	this.seatsPerRow = new int[rows];
     }//End of default constructor
@@ -57,14 +81,20 @@ public class Theatre
 	 *
 	 * @param name The name of the theatre.
 	 * @param address The address of the theatre.
+	 * @param phoneNumber The phone number to contact the theatre.
+	 * @param emailAddress The email address to contact the theatre.
+	 * @param website The theatre's website.
 	 * @param rows The number of rows in the theatre.
 	 * @param seatsPerRow The number of seats per row.
 	 * @since 1.0.0
 	 */
-    public Theatre(String name, Address address, int rows, int [] seatsPerRow)
+    public Theatre(String name, Address address, PhoneNumber phoneNumber, String emailAddress, String website, int rows, int [] seatsPerRow)
     {
     	this.name = name;
     	this.address = address;
+    	this.phoneNumber = phoneNumber;
+    	this.emailAddress = emailAddress;
+    	this.website = website;
     	this.rows = rows;
     	this.seatsPerRow = seatsPerRow;
     }//End of object constructor
@@ -93,6 +123,36 @@ public class Theatre
 	{
 		return this.address;
 	}//End of getAddress method
+
+	/**
+	 * Gets the value of phoneNumber.
+	 *
+	 * @return The value of phoneNumber.
+	 */
+	public PhoneNumber getPhoneNumber()
+	{
+		return this.phoneNumber;
+	}//End of getPhoneNumber method
+
+	/**
+	 * Gets the value of emailAddress.
+	 *
+	 * @return The value of emailAddress.
+	 */
+	public String getEmailAddress()
+	{
+		return this.emailAddress;
+	}//End of getEmailAddress method
+
+	/**
+	 * Gets the value of website.
+	 *
+	 * @return The value of website.
+	 */
+	public String getWebsite()
+	{
+		return this.website;
+	}//End of getWebsite method
 
 	/**
 	 * Gets the value of rows.
@@ -144,6 +204,36 @@ public class Theatre
 	}//End of setAddress method
 
 	/**
+	 * Sets the value of phoneNumber.
+	 *
+	 * @param phoneNumber The new value for phoneNumber.
+	 */
+	public void setPhoneNumber(PhoneNumber phoneNumber)
+	{
+		this.phoneNumber = phoneNumber;
+	}//End of setPhoneNumber method
+
+	/**
+	 * Sets the value of emailAddress.
+	 *
+	 * @param emailAddress The new value for emailAddress.
+	 */
+	public void setEmailAddress(String emailAddress)
+	{
+		this.emailAddress = emailAddress;
+	}//End of setEmailAddress method
+
+	/**
+	 * Sets the value of website.
+	 *
+	 * @param website The new value for website.
+	 */
+	public void setWebsite(String website)
+	{
+		this.website = website;
+	}//End of setWebsite method
+
+	/**
 	 * Sets the value of rows.
 	 *
 	 * @param rows The new value for rows.
@@ -167,6 +257,7 @@ public class Theatre
 	 * END OF MUTATOR METHODS *
 	 **************************/
 
+
 	/**
 	 * Returns a string representation of the object.
 	 *
@@ -180,6 +271,9 @@ public class Theatre
     	output += "[";
     	output += "Name: " + name + ", ";
     	output += "Address: " + address + ", ";
+    	output += "Phone Number: " + phoneNumber.toString() + ", ";
+    	output += "Email Address: " + emailAddress + ", ";
+    	output += "Website: " + website + ", ";
     	output += "# Rows: " + rows + ", ";
     	output += "# Seats Per Row: " + Arrays.toString(seatsPerRow);
     	output += "]";

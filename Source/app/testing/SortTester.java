@@ -11,6 +11,8 @@ public class SortTester
 {
     public static void main(String [] args)
     {
+    	/* TEMPORARILY CUT OUT TO COMPILE - PLEASE ADD THE LATEST VERSION OF SHOW TO DROPBOX.
+
     	ArrayList<Showing> testShowing = new ArrayList<Showing>();
     	Showing testee = new Showing();
     	testee.setDate(new Date(8000000));
@@ -40,6 +42,6 @@ public class SortTester
 
     	test = test.sort(SortTypes.RATING);
 
-    	System.out.println(test.toString());
+    	System.out.println(test.toString());*/
     }//End of main method
 }//End of class

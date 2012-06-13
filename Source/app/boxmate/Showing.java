@@ -1,11 +1,13 @@
 package app.boxmate;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * This class represents a showing of a show (i.e. if the show is being played more than once).
+ *
+ * UPDATES:
+ *		June 12:
+ *			- Now using custom date/time classes.
  *
  * @author Jonathan Tan
  * @version 1.0.0 (24/05/2012)
@@ -70,8 +72,8 @@ public class Showing
     public Showing()
     {
     	this.date = new Date();
-    	this.time = new Time(0);
-    	this.doorsOpen = new Time(0);
+    	this.time = new Time();
+    	this.doorsOpen = new Time();
     	this.seatsMax = 0;
     	this.seatsLeft = 0;
     	this.theatre = new Theatre();

@@ -1,7 +1,7 @@
 package app.boxmate;
 
-import java.util.*;
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Properties;
 import java.io.*;
 import javax.mail.*;
 import javax.mail.event.*;
@@ -14,7 +14,7 @@ import javax.activation.*;
  *		June 12, 2012:
  *			- Added email ticket.
  *
- * @author Jonathan Tan
+ * @author Jonathan Tan and Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
@@ -133,12 +133,16 @@ public class Ticket
     {
     	try
     	{
+    		//Declare and initialize constants
+    		final String PARAGRAPH = "<p><b style='display: inline-block; width: 130px; text-align: right; padding-right: 10px; padding-left: 10px;'>";
+
+    		//Set the properties to connect to the STMP server
     		Properties props = System.getProperties();
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.starttls.enable", "true");
 			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.port", "587");
-	
+
 			//Setup the session, and authentication
 			Session session = Session.getInstance(props,
 			  new javax.mail.Authenticator() {
@@ -146,50 +150,53 @@ public class Ticket
 					return new PasswordAuthentication("boxmate.software@gmail.com", "BoxMate2012Software");
 				}
 			  });
-	
+
 			//Create the message
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("boxmate-software@gmail.com", "BoxMate E-Tickets"));
 			message.setRecipients(Message.RecipientType.TO, new InternetAddress[]{new InternetAddress(emailAddress)});
-			message.setSubject("Your E-Ticket for " + this.show.getName());
-	
-	
-			String content = "";
-	
-			content += "<p style='background: #e3e3e3; padding: 8px; border-radius: 4px; -webkit-border-radius: 4px; font-weight: bold; font-size: 16pt;'>E-Ticket: " + this.show.getName() + "</p>";
-			content += "<p style='padding: 4px;'>" + this.customer.getFirstName() + ",<br /><br />Thank you for purchasing a ticket to this performance. Please print this ticket and bring it with you to be admitted into the event.</p>";
-			
-			content += "<div style='padding: 10px 50px;'><h3 style='color: #acacac'>" + this.show.getName() + "</h3>";
-			content += "<p style='color: #dcdcdc;'>" + this.show.getDescription() + "</p></div>";
-			
+			message.setSubject("E-Ticket for " + this.show.getName());
+
+
+			String content = "<style>a { color: black; }</style>";
+
+			content += "<p style='background: #e3e3e3; padding: 8px; border-radius: 4px; -webkit-border-radius: 4px; font-weight: bold; font-size: 16pt;'>E-Ticket: " + this.show.getName() + " </p>";
+			content += "<p style='padding: 4px;'>Dear " + this.customer.getFirstName() + ", <br /><br />Thank you for purchasing a ticket to this performance. Please print this ticket and bring it with you to be admitted to the event.</p>";
+
+			content += "<div style='padding: 10px 15px; margin: 20px; border: 1px dotted #acacac'><h3 style='color: #4c4c4c'>" + this.show.getName() + "</h3>";
+			content += "<p style='color: #6c6c6c;'>" + this.show.getDescription() + "</p></div>";
+
 			content += "<h3 style='text-decoration: underline; font-weight: bold;'>Ticket Information</h3>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Ticket Number:</b> " + String.valueOf(this.ID) + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Show:</b> " + this.show.getName() + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Date/Time:</b> " + this.showing.getDate() + " at " + this.showing.getTime() + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Doors Open:</b> " + this.showing.getDoorsOpen() + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Row:</b> " + this.row + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Seat:</b> " + this.seat + "</p>";
-	
+			content += PARAGRAPH + "Ticket Number:</b> " + String.valueOf(this.ID) + "</p>";
+			content += PARAGRAPH + "Show:</b> " + this.show.getName() + "</p>";
+			content += PARAGRAPH + "Date/Time:</b> " + this.showing.getDate().toString() + " at " + this.showing.getTime().toString() + "</p>";
+			content += PARAGRAPH + "Doors Open:</b> " + this.showing.getDoorsOpen().toString() + "</p>";
+			content += PARAGRAPH + "Row:</b> " + this.row + "</p>";
+			content += PARAGRAPH + "Seat:</b> " + this.seat + "</p>";
+
 			content += "<h3 style='text-decoration: underline; font-weight: bold;'>Theatre Information</h3>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Name:</b> " + this.showing.getTheatre().getName() + "</p>";
-			content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Address:</b> " + this.showing.getTheatre().getAddress().normalize() + "</p>";
-			//content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Phone:</b> (519) 452-2840</p>";
-			//content += "<p><b style='display: inline-block; width: 100px; text-align: right; padding-right: 10px; padding-left: 10px;'>Website:</b> <a style='color: black;' href='http://www.tvdsb.ca/sirwilfridlaurier.cfm'>http://www.tvdsb.ca/SirWilfridLaurier.cfm</a></p>";
-	
-	
+			content += PARAGRAPH + "Name:</b> " + this.showing.getTheatre().getName() + "</p>";
+			content += PARAGRAPH + "Address:</b> " + this.showing.getTheatre().getAddress().normalize() + "</p>";
+			content += PARAGRAPH + "Phone:</b> " + this.showing.getTheatre().getPhoneNumber().toString() + "</p>";
+			content += PARAGRAPH + "Email Address:</b> <a style='color: black;' href='mailto:" + this.showing.getTheatre().getEmailAddress() + "'>" + this.showing.getTheatre().getEmailAddress() + "</a></p>";
+			content += PARAGRAPH + "Website:</b> <a style='color: black;' href='" + this.showing.getTheatre().getWebsite() + "'>" + this.showing.getTheatre().getWebsite() + "</a></p>";
+
+
 			content += "<p style='text-style: italic; text-align: center; font-size: 9pt; color: #acacac;'>Email automatically generated by BoxMate.</p>";
-	
+
 			message.setContent(content, "text/html");
-	
+
 			message.saveChanges();
-	
+
 			//Send the message
 			Transport.send(message);
-			
+
 			return true;
     	}//End of try
     	catch (Exception e)
     	{
+    		e.printStackTrace();
+
     		return false;
     	}//End of catch
     }//End of email method
@@ -350,27 +357,31 @@ public class Ticket
 
     	return output;
     }//End of toString method
-    
+
+	//TEMPORARY TESTING !!! TO BE REMOVED FOR PRODUCTION
     public static void main (String [] args)
     {
     	Theatre theatre = new Theatre(
-    		"Sir Wilfrid Laurier S. S. RamLand Theatre",
+    		"Sir Wilfrid Laurier Secondary School - Auditorium",
     		new Address(450, "Millbank", "Drive", "London", "Ontario", "Canada", "N6C 4W7"),
+    		new PhoneNumber(519, 452, 2840),
+    		"laurier@tvdsb.on.ca",
+    		"http://www.tvdsb.ca/SirWilfridLaurier.cfm",
     		1,
     		new int[]{1}
     	);
-    	
+
     	ArrayList<Showing> showings = new ArrayList<Showing>();
     	showings.add(new Showing(
-			new Date(5464564),
-			new Time(65645),
-			new Time(6000),
+			new Date(2012, Date.Month.JUNE, 14),
+			new Time(19, 30),
+			new Time(19, 00),
 			155,
 			154,
 			theatre,
 			new ArrayList<Ticket>()
     	));
-    	
+
     	Customer customer = new Customer(
     		"zachary.seguin",
     		"NoPassword",
@@ -383,16 +394,16 @@ public class Ticket
     		new CreditCard(),
     		new ArrayList<Ticket>()
     	);
-    	
+
     	Show show = new Show(
     		"The Boyfriend",
-    		"Some awesome description",
+    		"The Boyfriend is a wonderful re-enactement of the professional play. With wonderful music from our lovely music department, you will be swept away by the talents of all high school students involved with the play.",
     		new ArrayList<String>(),
     		showings,
     		Rating.G,
     		1.0
     	);
-    
+
     	Ticket ticket = new Ticket(
     		5156165,
     		customer,
@@ -401,7 +412,7 @@ public class Ticket
     		1,
     		1
     	);
-    	
+
     	ticket.email();
     }
 }//End of class

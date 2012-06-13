@@ -92,15 +92,15 @@ public class ShowRoster
 		switch (sortType)
 		{
 			case NAME:			return sortByName();
-										
+
 			case DESCRIPTION:	return sortByDescription();
-																		
+
 			case NEXT_SHOWING:	return sortByNextShowing();
-										
+
 			case RATING:		return sortByRating();
-									
+
 			case RANKING:		return sortByRanking();
-										
+
 			default:			return this;
 		}
 	}//End of sort method
@@ -338,7 +338,9 @@ public class ShowRoster
 
     //Test harness
     public static void main(String [] args) {
-    	ArrayList<Showing> testShowing = new ArrayList<Showing>();
+ /*   	CHANGE TO USE NEW DATE/TIME CLASSES
+
+  		ArrayList<Showing> testShowing = new ArrayList<Showing>();
     	Showing testee = new Showing();
     	testee.setDate(new Date(8000000));
     	testee.setTime(new Time(10000));
@@ -359,7 +361,7 @@ public class ShowRoster
 
     	test.addShow(showA);
     	test.addShow(showB);
-    	
+
     	Show showC = new Show("Alice in Wonderland", "Lewis Carroll's beloved story.", prods, testShowing, Rating.G, 4.3);
     	showC.sortShowings();
 
@@ -367,6 +369,6 @@ public class ShowRoster
 
     	test = test.sort(SortTypes.RATING);
 
-    	System.out.println(test.toString());
+    	System.out.println(test.toString());*/
     }//End of main method
 }//End of class
