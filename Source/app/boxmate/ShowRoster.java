@@ -1,9 +1,6 @@
 package app.boxmate;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.sql.Time;
-
 
 /**
  * This class is contains a list of all the shows currently playing or which are to be played.  It also contains associated functionality in organizing this list of shows.

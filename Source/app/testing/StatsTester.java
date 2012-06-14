@@ -3,9 +3,7 @@ package app.testing;
 import app.boxmate.*;
 import app.util.*;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class StatsTester
 {

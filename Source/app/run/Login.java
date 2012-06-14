@@ -2,6 +2,7 @@ package app.run;
 
 //Import the required packages
 import app.boxmate.*;
+import app.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -69,7 +70,11 @@ public class Login extends JFrame implements ActionListener
 		JPanel loginPanel = new JPanel(new GridLayout(5, 1, 5, 5));
 
 		this.txtUsername = new JTextField();
+		this.txtUsername.addActionListener(this);
+
 		this.txtPassword = new JPasswordField();
+		this.txtPassword.addActionListener(this);
+
 		this.cmdLogin = new JButton("Login");
 		this.cmdLogin.addActionListener(this);
 
@@ -98,6 +103,130 @@ public class Login extends JFrame implements ActionListener
 	}//End of initializeGUI method
 
 	/**
+	 * Performs the actions required to login the user.
+	 * 1. Verifies all information has been entered.
+	 * 2. Verifies that the username/password combintation is correct.
+	 * 3. Verifies the user has access to the "Clerk System"
+	 * 4. Logins in the user, if successful.
+	 */
+	private void login()
+	{
+		try
+		{
+			//Get the connection to the database
+			Database db = new Database();
+
+			//Get the data and format it correctly
+			String username = txtUsername.getText().trim().toLowerCase();
+			String password = new String(txtPassword.getPassword()).trim();
+
+			//Verify that user information has been inserted into the username/password fields
+			if (username.length() == 0)
+			{
+				JOptionPane.showMessageDialog(
+					this,
+					"Please enter your username.",
+					Application.NAME,
+					JOptionPane.WARNING_MESSAGE
+				);
+
+				txtUsername.requestFocus();
+			}//End of if
+			else if (password.length() == 0)
+			{
+				JOptionPane.showMessageDialog(
+					this,
+					"Please enter your password.",
+					Application.NAME,
+					JOptionPane.WARNING_MESSAGE
+				);
+
+				txtPassword.requestFocus();
+			}//End of else if
+			else
+			{
+				if (!db.usernameExists(username))
+				{
+					JOptionPane.showMessageDialog(
+						this,
+						"The user " + username + " does not exist.",
+						Application.NAME,
+						JOptionPane.WARNING_MESSAGE
+					);
+
+					txtUsername.requestFocus();
+				}//End of if
+				else
+				{
+					User user = db.getUser(username);
+					byte [] bPassword = PasswordEncryption.hashPassword(username, password);
+
+					if (bPassword.length != user.getPassword().length)
+					{
+							JOptionPane.showMessageDialog(
+								this,
+								"The username/password combination your provided does not exist.",
+								Application.NAME,
+								JOptionPane.WARNING_MESSAGE
+							);
+
+							txtPassword.setText("");
+							txtPassword.requestFocus();
+					}//End of if
+					else
+					{
+						boolean same = true;
+
+						//Check the passwords for equality
+						for (int x = 0; x < bPassword.length; x++)
+						{
+							if (bPassword[x] != user.getPassword()[x])
+							{
+								same = false;
+								break;
+							}//End of if
+						}//End of for
+
+						if (same)
+						{
+							//Login the user
+							Session.login(user);
+
+							//Open the dashbard
+							Session.openWindow(new Dashboard());
+
+							//Close this window
+							this.dispose();
+						}//End of if
+						else
+						{
+							JOptionPane.showMessageDialog(
+								this,
+								"The username/password combination your provided does not exist.",
+								Application.NAME,
+								JOptionPane.WARNING_MESSAGE
+							);
+
+							txtPassword.setText("");
+							txtPassword.requestFocus();
+						}//End of else
+					}//End of else
+				}//End of else
+			}//End of else
+		}//End of try
+		catch (Exception e)
+		{
+			//Inform the user that the application was unable to connect to the database.
+			JOptionPane.showMessageDialog(
+				this,
+				"An error occured connecting to the database.\n\nIf this problem continues, please contact your system administrator.",
+				Application.NAME,
+				JOptionPane.ERROR_MESSAGE
+			);
+		}//End of catch
+	}//End of login method
+
+	/**
 	 * Handles user interactions with the GUI components on the screen. This is called automatically by the action listener.
 	 *
 	 * @param event The event that was generated.
@@ -108,27 +237,8 @@ public class Login extends JFrame implements ActionListener
 	{
 		Object trigerObject = event.getSource();
 
-		if (trigerObject == this.cmdLogin)
-		{
-			try
-			{
-				Database db = new Database();
-
-				if (db.usernameExists(txtUsername.getText()))
-				{
-					Session.login(txtUsername.getText());
-
-					new Dashboard();
-					this.dispose();
-				}
-				else
-					JOptionPane.showMessageDialog(this, "No account matched the provided username and/or password.", Application.NAME, JOptionPane.WARNING_MESSAGE);
-			}
-			catch (Exception e)
-			{
-				JOptionPane.showMessageDialog(this, "An error occured querying the database.", Application.NAME, JOptionPane.ERROR_MESSAGE);
-			}
-		}
+		if (trigerObject == this.cmdLogin || trigerObject == this.txtUsername || trigerObject == this.txtPassword)
+			login();
 		else
 			JOptionPane.showMessageDialog(this, "This option is temporarily unavailable.", Application.NAME, JOptionPane.INFORMATION_MESSAGE);
 	}//End of actionPerformed method

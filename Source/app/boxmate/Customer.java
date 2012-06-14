@@ -56,7 +56,7 @@ import java.util.ArrayList;
 	 *
 	 * @since 1.0.0
 	 */
-	public Customer(String username, String password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber, CreditCard creditCard, ArrayList<Ticket> tickets)
+	public Customer(String username, byte [] password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber, CreditCard creditCard, ArrayList<Ticket> tickets)
 	{
 		//Call the parent class' constructor.
 		super(username, password, accountLevel, firstName, lastName, address, emailAddress, phoneNumber);

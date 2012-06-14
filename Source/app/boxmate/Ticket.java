@@ -7,6 +7,8 @@ import javax.mail.*;
 import javax.mail.event.*;
 import javax.mail.internet.*;
 import javax.activation.*;
+import app.util.*;
+
 /**
  * This class represents a virtual ticket with show information and can be used at the actual production.
  *
@@ -359,7 +361,7 @@ public class Ticket
     }//End of toString method
 
 	//TEMPORARY TESTING !!! TO BE REMOVED FOR PRODUCTION
-    public static void main (String [] args)
+    public static void main (String [] args) throws Exception
     {
     	Theatre theatre = new Theatre(
     		"Sir Wilfrid Laurier Secondary School - Auditorium",
@@ -384,10 +386,10 @@ public class Ticket
 
     	Customer customer = new Customer(
     		"zachary.seguin",
-    		"NoPassword",
+    		PasswordEncryption.hashPassword("zachary.seguin", "Password"),
     		10,
-    		"Jonathan",
-    		"Tan",
+    		"Zachary",
+    		"Seguin",
     		new Address(429, "Cardigan", "Place", "London", "Ontario", "Canada", "N6M 1J6"),
     		"zseguin@me.com",
     		new PhoneNumber(519, 668, 3141),
@@ -414,6 +416,6 @@ public class Ticket
     		1
     	);
 
-    	ticket.email("jontan_@hotmail.com");
+    	ticket.email();
     }
 }//End of class

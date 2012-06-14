@@ -38,6 +38,7 @@ public class Database
 		public final static String ACCOUNT_LEVEL = "accountLevel";
 		public final static String ADDRESS = "address";
 		public final static String PHONE_NUMBER = "phoneNumber";
+		public final static String EMAIL_ADDRESS = "emailAddress";
 		public final static String CREDIT_CARD = "creditCard";
 		public final static String EMPLOYEE_ID = "employeeID";
 		public final static String COMPANY = "company";
@@ -160,10 +161,13 @@ public class Database
 	 */
 	public void writeUser(User user) throws Exception
 	{
+		if (usernameExists(user.getUsername()))
+			throw new Exception("This username already exist.");
+
 		//Prepare the query
 		PreparedStatement query = database.getPreparedStatement("INSERT INTO users (username, password, accountLevel, firstName, lastName, address, emailAddress, phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		query.setString(1, user.getUsername());
-		query.setString(2, user.getPassword());
+		query.setBytes(2, user.getPassword());
 		query.setInt(3, user.getAccountLevel());
 		query.setString(4, user.getFirstName());
 		query.setString(5, user.getLastName());
@@ -190,9 +194,43 @@ public class Database
 
 		ResultSet results = query.executeQuery();
 
-		if (results.last())
+		if (results.first())
 			return true;
 		else
 			return false;
+	}//End of usernameExists method
+
+	/**
+	 * Returns a user object with the user.
+	 *
+	 * @param username The username to get.
+	 * @return The user.
+	 *
+	 * @since 1.0.0
+	 */
+	public User getUser(String username) throws Exception
+	{
+		PreparedStatement query = database.getPreparedStatement("SELECT * FROM users WHERE username=?");
+		query.setString(1, username);
+
+		ResultSet results = query.executeQuery();
+
+		if (results.first())
+		{
+			User user = new Customer();
+
+			user.setUsername(results.getString(Users.USERNAME));
+			user.setPassword(results.getBytes(Users.PASSWORD));
+			user.setFirstName(results.getString(Users.FIRST_NAME));
+			user.setLastName(results.getString(Users.LAST_NAME));
+			user.setAccountLevel(results.getInt(Users.ACCOUNT_LEVEL));
+			user.setAddress(new Address()); // NEED PARSE ADDRESS
+			user.setPhoneNumber(new PhoneNumber()); // NEED PARSE PHONE NUMBER
+			user.setEmailAddress(results.getString(Users.EMAIL_ADDRESS));
+
+			return user;
+		}//End of if
+		else
+			return null;
 	}//End of usernameExists method
 }//End of class

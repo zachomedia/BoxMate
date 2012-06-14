@@ -63,7 +63,7 @@ package app.boxmate;
 	 *
 	 * @since 1.0.0
 	 */
-	public Employee(String username, String password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber, int employeeID, String company, String position)
+	public Employee(String username, byte [] password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber, int employeeID, String company, String position)
 	{
 		//Call the parent class' constructor.
 		super(username, password, accountLevel, firstName, lastName, address, emailAddress, phoneNumber);

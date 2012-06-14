@@ -21,7 +21,7 @@ package app.boxmate;
 	 *
 	 * @since 1.0.0
 	 */
-	protected String password;
+	protected byte [] password;
 
 	/**
 	 * The user's accountLevel.
@@ -74,7 +74,7 @@ package app.boxmate;
 	{
 		//Intialize all the instance variables.
 		this.username = "";
-		this.password = "";
+		this.password = new byte[0];
 		this.accountLevel = 0;
 		this.firstName = "";
 		this.lastName = "";
@@ -97,7 +97,7 @@ package app.boxmate;
 	 *
 	 * @since 1.0.0
 	 */
-	public User(String username, String password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber)
+	public User(String username, byte [] password, int accountLevel, String firstName, String lastName, Address address, String emailAddress, PhoneNumber phoneNumber)
 	{
 		//Intialize all the instance variables.
 		this.username = username;
@@ -139,7 +139,7 @@ package app.boxmate;
 	 *
 	 * @return The value of password.
 	 */
-	public String getPassword()
+	public byte [] getPassword()
 	{
 		return this.password;
 	}//End of getPassword method
@@ -228,9 +228,26 @@ package app.boxmate;
 	 *
 	 * @param password The new value for password.
 	 */
-	public void setPassword(String password)
+	public void setPassword(byte [] password)
 	{
 		this.password = password;
+	}//End of setPassword method
+
+	/**
+	 * Sets the value of password.
+	 *
+	 * @param password The new value for password.
+	 */
+	public void setPassword(String password)
+	{
+		try
+		{
+			this.password = app.util.PasswordEncryption.hashPassword(this.username, password);
+		}
+		catch (Exception e)
+		{
+			this.password = new byte[0];
+		}
 	}//End of setPassword method
 
 	/**
@@ -314,7 +331,7 @@ package app.boxmate;
 		user += "[";
 
 		user += "username : '" + this.username + "', ";
-		user += "password : '" + this.password + "', ";
+		user += "password : '" + new String(this.password) + "', ";
 		user += "accountLevel : '" + String.valueOf(this.accountLevel) + "', ";
 		user += "firstName : '" + this.firstName + "', ";
 		user += "lastName : '" + this.lastName + "', ";

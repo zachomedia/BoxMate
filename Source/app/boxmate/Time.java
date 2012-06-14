@@ -5,6 +5,10 @@ import java.util.Calendar;
 /**
  * Stores a time.
  *
+ * UPDATES:
+ *		June 13:
+ *			- Implemented compareTo method.
+ *
  * @author Zachary Seguin
  * @version 1.0.0 (12/06/2012)
  * @since 1.0.0
@@ -120,8 +124,27 @@ public class Time
 	 */
 	public int compareTo(Object object)
 	{
-		return 0;
-	}//End of compereTo method
+		if (object instanceof Time)
+		{
+			Time time = (Time)object;
+
+			if (this.hour > time.getHour())
+				return 1;
+			else if (this.hour < time.getHour())
+				return -1;
+			else
+			{
+				if (this.minute > time.getMinute())
+					return 1;
+				else if (this.minute < time.getMinute())
+					return -1;
+				else
+					return 0;
+			}
+		}
+		else
+			return 0;
+	}//End of compareTo method
 
 	/**
 	 * Returns the Time object expressed as a String.

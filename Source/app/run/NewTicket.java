@@ -1,6 +1,7 @@
 package app.run;
 
 import app.boxmate.*;
+import app.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -52,17 +53,21 @@ public class NewTicket extends JFrame implements ActionListener
 	 */
 	public NewTicket()
 	{
-		//Setup the GUI
-		this.setTitle("New Ticket | " + Application.NAME);
-		this.setSize(800, 400);
-		this.setResizable(false);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setVisible(true);
-		
-		this.initializeGUI();
+		if (Session.loggedIn)
+		{
+				//Setup the GUI
+			this.setTitle("New Ticket | " + Application.NAME);
+			this.setSize(800, 400);
+			this.setResizable(false);
+			this.setLocationRelativeTo(null);
+			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			this.setVisible(true);
 
-		
+			this.initializeGUI();
+
+		}
+		else
+			JOptionPane.showMessageDialog(null, "You must be logged in to create a new ticket.", Application.NAME, JOptionPane.ERROR_MESSAGE);
 	}//End of constructor
 
 	/**
@@ -80,7 +85,7 @@ public class NewTicket extends JFrame implements ActionListener
 		{
 			db = new Database();
 			shows = db.loadShows();
-			
+
 			this.setVisible(true);
 		}//End of try
 		catch (Exception e)
@@ -365,7 +370,14 @@ public class NewTicket extends JFrame implements ActionListener
 
 		//Create username and password
 		customer.setUsername(customer.getFirstName().toLowerCase() + "." + customer.getLastName().toLowerCase());
-		customer.setPassword("NoPasswordExists");
+		try
+		{
+			customer.setPassword(PasswordEncryption.hashPassword(customer.getUsername(), "NoPasswordExists"));
+		}
+		catch (Exception e)
+		{
+			customer.setPassword(new byte[0]);
+		}
 
 		//Temporary output
 		System.out.println(customer.toString());

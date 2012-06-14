@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * UPDATES:
  *		June 12:
  *			- Now using custom date/time classes.
+ *		June 13:
+ *			= Threw in implementation of organizeSeating method
  *
  * @author Jonathan Tan
  * @version 1.0.0 (24/05/2012)
@@ -290,11 +292,23 @@ public class Showing
 	 * @param rows The number of rows in the seating plan.
 	 * @param seatsPerRow The number of seats per row in the seating plan.
 	 * @since 1.0.0
-	 * @todo Implement.
 	 */
 	 public Ticket[][] organizeSeating(int rows, int [] seatsPerRow)
 	 {
-	 	return new Ticket[0][0];
+	 	Ticket [][] seating = new Ticket[rows][];
+
+	 	for (int x = 0; x < seating.length; x++)
+	 		seating[x] = new Ticket[seatsPerRow[x]];
+
+	 	for (Ticket t : tickets)
+	 	{
+	 		if (seating[t.getRow()][t.getSeat()] == null)
+	 			System.out.println("Error: Ticket #" + t.getID());
+	 		else
+	 			seating[t.getRow()][t.getSeat()] = t;
+	 	}
+
+	 	return seating;
 	 }//End of organizeSeating method
 
 	/**

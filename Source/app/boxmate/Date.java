@@ -5,11 +5,15 @@ import java.util.Calendar;
 /**
  * Stores a date.
  *
+ * UPDATES:
+ *		June 13:
+ *			- Implemented compareTo method.
+ *
  * @author Zachary Seguin
  * @version 1.0.0 (12/06/2012)
  * @since 1.0.0
  */
-public class Date
+public class Date implements Comparable
 {
 	/**
 	 * Stores the potential values for month.
@@ -200,8 +204,34 @@ public class Date
 	 */
 	public int compareTo(Object object)
 	{
-		return 0;
-	}//End of compereTo method
+		if (object instanceof Date)
+		{
+			Date date = (Date)object;
+
+			if (this.year > date.getYear())
+				return 1;
+			else if (this.year < date.getYear())
+				return -1;
+			else
+			{
+				if (this.month.ordinal() > date.getMonth().ordinal())
+					return 1;
+				else if (this.month.ordinal() < date.getMonth().ordinal())
+					return -1;
+				else
+				{
+					if (this.day > date.getDay())
+						return 1;
+					else if (this.day < date.getDay())
+						return -1;
+					else
+						return 0;
+				}
+			}
+		}
+		else
+			return 0;
+	}//End of compareTo method
 
 	/**
 	 * Returns the Date object expressed as a String.
