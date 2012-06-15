@@ -5,12 +5,23 @@ import java.util.Arrays;
 /**
  * This class represents a venue for a showing.
  *
+ * CHANGES:
+ *		June 15, 2012 (Zach):
+ *			- Added ID field, for Database
+ *
  * @author Jonathan Tan and Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
 public class Theatre
 {
+	/**
+	 * The ID of the theatre, as provided by the database.
+	 *
+	 * @since 1.0.0
+	 */
+	private long ID;
+	
 	/**
 	 * The name of the theatre.
 	 *
@@ -67,6 +78,7 @@ public class Theatre
 	 */
     public Theatre()
     {
+    	this.ID = 0;
     	this.name = "Generic Theatre";
     	this.address = new Address();
     	this.phoneNumber = new PhoneNumber();
@@ -75,7 +87,7 @@ public class Theatre
     	this.rows = 0;
     	this.seatsPerRow = new int[rows];
     }//End of default constructor
-
+   
     /**
 	 * A constructor for the Theatre class that requires the user/program to specify all the attributes as parameters.
 	 *
@@ -90,6 +102,32 @@ public class Theatre
 	 */
     public Theatre(String name, Address address, PhoneNumber phoneNumber, String emailAddress, String website, int rows, int [] seatsPerRow)
     {
+    	this.ID = 0;
+    	this.name = name;
+    	this.address = address;
+    	this.phoneNumber = phoneNumber;
+    	this.emailAddress = emailAddress;
+    	this.website = website;
+    	this.rows = rows;
+    	this.seatsPerRow = seatsPerRow;
+    }//End of object constructor
+    
+    /**
+	 * A constructor for the Theatre class that requires the user/program to specify all the attributes as parameters.
+	 *
+	 * @param ID The theatre ID, as provided by the database.
+	 * @param name The name of the theatre.
+	 * @param address The address of the theatre.
+	 * @param phoneNumber The phone number to contact the theatre.
+	 * @param emailAddress The email address to contact the theatre.
+	 * @param website The theatre's website.
+	 * @param rows The number of rows in the theatre.
+	 * @param seatsPerRow The number of seats per row.
+	 * @since 1.0.0
+	 */
+    public Theatre(long ID, String name, Address address, PhoneNumber phoneNumber, String emailAddress, String website, int rows, int [] seatsPerRow)
+    {
+    	this.ID = ID;
     	this.name = name;
     	this.address = address;
     	this.phoneNumber = phoneNumber;
@@ -99,11 +137,21 @@ public class Theatre
     	this.seatsPerRow = seatsPerRow;
     }//End of object constructor
 
-
+		
 	/********************
 	 * ACCESSOR METHODS *
 	 ********************/
-
+	
+	/**
+	 * Gets the value of ID.
+	 *
+	 * @return The value of ID.
+	 */
+	public long getID()
+	{
+		return this.ID;
+	}//End of getID method
+	
 	/**
 	 * Gets the value of name.
 	 *
@@ -113,7 +161,7 @@ public class Theatre
 	{
 		return this.name;
 	}//End of getName method
-
+	
 	/**
 	 * Gets the value of address.
 	 *
@@ -123,7 +171,7 @@ public class Theatre
 	{
 		return this.address;
 	}//End of getAddress method
-
+	
 	/**
 	 * Gets the value of phoneNumber.
 	 *
@@ -133,7 +181,7 @@ public class Theatre
 	{
 		return this.phoneNumber;
 	}//End of getPhoneNumber method
-
+	
 	/**
 	 * Gets the value of emailAddress.
 	 *
@@ -143,7 +191,7 @@ public class Theatre
 	{
 		return this.emailAddress;
 	}//End of getEmailAddress method
-
+	
 	/**
 	 * Gets the value of website.
 	 *
@@ -153,7 +201,7 @@ public class Theatre
 	{
 		return this.website;
 	}//End of getWebsite method
-
+	
 	/**
 	 * Gets the value of rows.
 	 *
@@ -163,7 +211,7 @@ public class Theatre
 	{
 		return this.rows;
 	}//End of getRows method
-
+	
 	/**
 	 * Gets the value of seatsPerRow.
 	 *
@@ -173,16 +221,26 @@ public class Theatre
 	{
 		return this.seatsPerRow;
 	}//End of getSeatsPerRow method
-
+	
 	/***************************
 	 * END OF ACCESSOR METHODS *
 	 ***************************/
 
-
+		
 	/*******************
 	 * MUTATOR METHODS *
 	 *******************/
-
+	
+	/**
+	 * Sets the value of ID.
+	 *
+	 * @param ID The new value for ID.
+	 */
+	public void setID(long ID)
+	{
+		this.ID = ID;
+	}//End of setID method
+	
 	/**
 	 * Sets the value of name.
 	 *
@@ -192,7 +250,7 @@ public class Theatre
 	{
 		this.name = name;
 	}//End of setName method
-
+	
 	/**
 	 * Sets the value of address.
 	 *
@@ -202,7 +260,7 @@ public class Theatre
 	{
 		this.address = address;
 	}//End of setAddress method
-
+	
 	/**
 	 * Sets the value of phoneNumber.
 	 *
@@ -212,7 +270,7 @@ public class Theatre
 	{
 		this.phoneNumber = phoneNumber;
 	}//End of setPhoneNumber method
-
+	
 	/**
 	 * Sets the value of emailAddress.
 	 *
@@ -222,7 +280,7 @@ public class Theatre
 	{
 		this.emailAddress = emailAddress;
 	}//End of setEmailAddress method
-
+	
 	/**
 	 * Sets the value of website.
 	 *
@@ -232,7 +290,7 @@ public class Theatre
 	{
 		this.website = website;
 	}//End of setWebsite method
-
+	
 	/**
 	 * Sets the value of rows.
 	 *
@@ -242,7 +300,7 @@ public class Theatre
 	{
 		this.rows = rows;
 	}//End of setRows method
-
+	
 	/**
 	 * Sets the value of seatsPerRow.
 	 *
@@ -252,12 +310,12 @@ public class Theatre
 	{
 		this.seatsPerRow = seatsPerRow;
 	}//End of setSeatsPerRow method
-
+	
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
 
-
+	
 	/**
 	 * Returns a string representation of the object.
 	 *

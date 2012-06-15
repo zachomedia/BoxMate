@@ -6,17 +6,26 @@ import java.util.ArrayList;
  * This class represents a showing of a show (i.e. if the show is being played more than once).
  *
  * UPDATES:
- *		June 12:
+ *		June 12 (Jonathan):
  *			- Now using custom date/time classes.
- *		June 13:
- *			= Threw in implementation of organizeSeating method
+ *		June 13 (Jonathan):
+ *			- Threw in implementation of organizeSeating method
+ *		June 15, 2012 (Zach):
+ *			- Added ID field, for the database.
  *
- * @author Jonathan Tan
+ * @author Jonathan Tan and Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
 public class Showing
 {
+	/**
+	 * The ID of the showing, as provided by the Database.
+	 *
+	 * @since 1.0.0
+	 */
+	private long ID;
+	
 	/**
 	 * The number of seats per row.
 	 *
@@ -73,6 +82,7 @@ public class Showing
 	 */
     public Showing()
     {
+    	this.ID = 0;
     	this.date = new Date();
     	this.time = new Time();
     	this.doorsOpen = new Time();
@@ -96,6 +106,32 @@ public class Showing
 	 */
     public Showing(Date date, Time time, Time doorsOpen, int seatsMax, int seatsLeft, Theatre theatre, ArrayList<Ticket> tickets)
     {
+    	this.ID = 0;
+    	this.date = date;
+    	this.time = time;
+    	this.doorsOpen = doorsOpen;
+    	this.seatsMax = seatsMax;
+    	this.seatsLeft = seatsLeft;
+    	this.theatre = theatre;
+    	this.tickets = tickets;
+    }//End of object constructor
+    
+    /**
+	 * A constructor for the Showing class that requires the user/program to specify all the attributes as parameters.
+	 *
+	 * @param ID The ID of the database, as provided by the database.
+	 * @param date The date of this showing.
+	 * @param time The time that the show begins.
+	 * @param doorsOpen The time the doors open for the show.
+	 * @param seatsMax The maximum number of seats that can be sold.
+	 * @param seatsLeft The number of seats left for sale.
+	 * @param theatre The venue for the showing.
+	 * @param tickets A list of all tickets that are for this showing.
+	 * @since 1.0.0
+	 */
+    public Showing(long ID, Date date, Time time, Time doorsOpen, int seatsMax, int seatsLeft, Theatre theatre, ArrayList<Ticket> tickets)
+    {
+    	this.ID = ID;
     	this.date = date;
     	this.time = time;
     	this.doorsOpen = doorsOpen;
@@ -105,11 +141,21 @@ public class Showing
     	this.tickets = tickets;
     }//End of object constructor
 
-
+		
 	/********************
 	 * ACCESSOR METHODS *
 	 ********************/
-
+	
+	/**
+	 * Gets the value of ID.
+	 *
+	 * @return The value of ID.
+	 */
+	public long getID()
+	{
+		return this.ID;
+	}//End of getID method
+	
 	/**
 	 * Gets the value of date.
 	 *
@@ -119,7 +165,7 @@ public class Showing
 	{
 		return this.date;
 	}//End of getDate method
-
+	
 	/**
 	 * Gets the value of time.
 	 *
@@ -129,7 +175,7 @@ public class Showing
 	{
 		return this.time;
 	}//End of getTime method
-
+	
 	/**
 	 * Gets the value of doorsOpen.
 	 *
@@ -139,7 +185,7 @@ public class Showing
 	{
 		return this.doorsOpen;
 	}//End of getDoorsOpen method
-
+	
 	/**
 	 * Gets the value of seatsMax.
 	 *
@@ -149,7 +195,7 @@ public class Showing
 	{
 		return this.seatsMax;
 	}//End of getSeatsMax method
-
+	
 	/**
 	 * Gets the value of seatsLeft.
 	 *
@@ -159,7 +205,7 @@ public class Showing
 	{
 		return this.seatsLeft;
 	}//End of getSeatsLeft method
-
+	
 	/**
 	 * Gets the value of theatre.
 	 *
@@ -169,7 +215,7 @@ public class Showing
 	{
 		return this.theatre;
 	}//End of getTheatre method
-
+	
 	/**
 	 * Gets the value of tickets.
 	 *
@@ -179,16 +225,26 @@ public class Showing
 	{
 		return this.tickets;
 	}//End of getTickets method
-
+	
 	/***************************
 	 * END OF ACCESSOR METHODS *
 	 ***************************/
 
-
+		
 	/*******************
 	 * MUTATOR METHODS *
 	 *******************/
-
+	
+	/**
+	 * Sets the value of ID.
+	 *
+	 * @param ID The new value for ID.
+	 */
+	public void setID(long ID)
+	{
+		this.ID = ID;
+	}//End of setID method
+	
 	/**
 	 * Sets the value of date.
 	 *
@@ -198,7 +254,7 @@ public class Showing
 	{
 		this.date = date;
 	}//End of setDate method
-
+	
 	/**
 	 * Sets the value of time.
 	 *
@@ -208,7 +264,7 @@ public class Showing
 	{
 		this.time = time;
 	}//End of setTime method
-
+	
 	/**
 	 * Sets the value of doorsOpen.
 	 *
@@ -218,7 +274,7 @@ public class Showing
 	{
 		this.doorsOpen = doorsOpen;
 	}//End of setDoorsOpen method
-
+	
 	/**
 	 * Sets the value of seatsMax.
 	 *
@@ -228,7 +284,7 @@ public class Showing
 	{
 		this.seatsMax = seatsMax;
 	}//End of setSeatsMax method
-
+	
 	/**
 	 * Sets the value of seatsLeft.
 	 *
@@ -238,7 +294,7 @@ public class Showing
 	{
 		this.seatsLeft = seatsLeft;
 	}//End of setSeatsLeft method
-
+	
 	/**
 	 * Sets the value of theatre.
 	 *
@@ -248,7 +304,7 @@ public class Showing
 	{
 		this.theatre = theatre;
 	}//End of setTheatre method
-
+	
 	/**
 	 * Sets the value of tickets.
 	 *
@@ -258,7 +314,7 @@ public class Showing
 	{
 		this.tickets = tickets;
 	}//End of setTickets method
-
+	
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
@@ -306,7 +362,7 @@ public class Showing
 	 			System.out.println("Error: Ticket #" + t.getID());
 	 		else
 	 			seating[t.getRow()][t.getSeat()] = t;
-	 	}
+	 	}//End of for
 
 	 	return seating;
 	 }//End of organizeSeating method

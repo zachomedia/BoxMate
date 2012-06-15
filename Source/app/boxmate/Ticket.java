@@ -71,13 +71,33 @@ public class Ticket
 	 */
     public Ticket()
     {
-    	this.ID = 000000000;
+    	this.ID = 0;
     	this.customer = new Customer();
     	this.show = new Show();
     	this.showing = new Showing();
     	this.row = 0;
     	this.seat = 0;
     }//End of default constructor
+
+ 	/**
+	 * A constructor for the Ticket class that requires the user/program to specify all the attributes as parameters.
+	 *
+	 * @param customer The customer with which the ticket is associated with.
+	 * @param show The show this ticket is for.
+	 * @param showing The particular showing that this ticket is for.
+	 * @param row The row to which the customer is assigned.
+	 * @param seat The seat to which the customer is assigned.
+	 * @since 1.0.0
+	 */
+    public Ticket(Customer customer, Show show, Showing showing, int row, int seat)
+    {
+    	this.ID = 0;
+    	this.customer = customer;
+    	this.show = show;
+    	this.showing = showing;
+    	this.row = row;
+    	this.seat = seat;
+    }//End of object constructor
 
     /**
 	 * A constructor for the Ticket class that requires the user/program to specify all the attributes as parameters.

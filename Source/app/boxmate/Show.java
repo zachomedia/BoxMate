@@ -23,12 +23,23 @@ import org.xml.sax.SAXException;
 /**
  * This class represents a show that is being played at certain venue.  Customers can purchase tickets or rate it. Managers can create instances of a show and edit its details.
  *
+ * CHANGES:
+ *		June 15, 2012 (Zach):
+ *			- Added ID field, for the database.
+ *
  * @author Jonathan Tan
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
  */
 public class Show
 {
+	/**
+	 * The ID of the show, as provided by the Database.
+	 *
+	 * @since 1.0.0
+	 */
+	private long ID;
+	
 	/**
 	 * The name of the show or production.
 	 *
@@ -85,6 +96,7 @@ public class Show
 	 */
     public Show()
     {
+    	this.ID = 0;
     	this.name = "";
     	this.description = "";
     	this.productionMembers = new ArrayList<String>();
@@ -107,6 +119,7 @@ public class Show
 	 */
     public Show(String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking, double price)
     {
+    	this.ID = 0;
     	this.name = name;
     	this.description = description;
     	this.productionMembers = productionMembers;
@@ -116,11 +129,45 @@ public class Show
     	this.price = price;
     }//End of object constructor
 
+	/**
+	 * A constructor for the Show class that requires the user/program to specify all the attributes as parameters.
+	 *
+	 * @param ID The ID of the show, as provided by the database.
+	 * @param name The name of the show or production.
+	 * @param description A description of the show or production.
+	 * @param productionMembers The names of all the people involved with the show or production.
+	 * @param showings A list of all the showings that the show has..
+	 * @param rating The content rating of the show.
+	 * @param ranking The average of all users’ rankings of the show or production, out of 5.
+	 * @since 1.0.0
+	 */
+    public Show(long ID, String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking, double price)
+    {
+    	this.ID = ID;
+    	this.name = name;
+    	this.description = description;
+    	this.productionMembers = productionMembers;
+    	this.showings = showings;
+    	this.rating = rating;
+    	this.ranking = ranking;
+    	this.price = price;
+    }//End of object constructor
 
+		
 	/********************
 	 * ACCESSOR METHODS *
 	 ********************/
-
+	
+	/**
+	 * Gets the value of ID.
+	 *
+	 * @return The value of ID.
+	 */
+	public long getID()
+	{
+		return this.ID;
+	}//End of getID method
+	
 	/**
 	 * Gets the value of name.
 	 *
@@ -130,7 +177,7 @@ public class Show
 	{
 		return this.name;
 	}//End of getName method
-
+	
 	/**
 	 * Gets the value of description.
 	 *
@@ -140,7 +187,7 @@ public class Show
 	{
 		return this.description;
 	}//End of getDescription method
-
+	
 	/**
 	 * Gets the value of productionMembers.
 	 *
@@ -150,7 +197,7 @@ public class Show
 	{
 		return this.productionMembers;
 	}//End of getProductionMembers method
-
+	
 	/**
 	 * Gets the value of showings.
 	 *
@@ -160,7 +207,7 @@ public class Show
 	{
 		return this.showings;
 	}//End of getShowings method
-
+	
 	/**
 	 * Gets the value of rating.
 	 *
@@ -170,7 +217,7 @@ public class Show
 	{
 		return this.rating;
 	}//End of getRating method
-
+	
 	/**
 	 * Gets the value of ranking.
 	 *
@@ -180,7 +227,7 @@ public class Show
 	{
 		return this.ranking;
 	}//End of getRanking method
-
+	
 	/**
 	 * Gets the value of price.
 	 *
@@ -190,16 +237,26 @@ public class Show
 	{
 		return this.price;
 	}//End of getPrice method
-
+	
 	/***************************
 	 * END OF ACCESSOR METHODS *
 	 ***************************/
 
-
+		
 	/*******************
 	 * MUTATOR METHODS *
 	 *******************/
-
+	
+	/**
+	 * Sets the value of ID.
+	 *
+	 * @param ID The new value for ID.
+	 */
+	public void setID(long ID)
+	{
+		this.ID = ID;
+	}//End of setID method
+	
 	/**
 	 * Sets the value of name.
 	 *
@@ -209,7 +266,7 @@ public class Show
 	{
 		this.name = name;
 	}//End of setName method
-
+	
 	/**
 	 * Sets the value of description.
 	 *
@@ -219,7 +276,7 @@ public class Show
 	{
 		this.description = description;
 	}//End of setDescription method
-
+	
 	/**
 	 * Sets the value of productionMembers.
 	 *
@@ -229,7 +286,7 @@ public class Show
 	{
 		this.productionMembers = productionMembers;
 	}//End of setProductionMembers method
-
+	
 	/**
 	 * Sets the value of showings.
 	 *
@@ -239,7 +296,7 @@ public class Show
 	{
 		this.showings = showings;
 	}//End of setShowings method
-
+	
 	/**
 	 * Sets the value of rating.
 	 *
@@ -249,7 +306,7 @@ public class Show
 	{
 		this.rating = rating;
 	}//End of setRating method
-
+	
 	/**
 	 * Sets the value of ranking.
 	 *
@@ -259,7 +316,7 @@ public class Show
 	{
 		this.ranking = ranking;
 	}//End of setRanking method
-
+	
 	/**
 	 * Sets the value of price.
 	 *
@@ -269,10 +326,11 @@ public class Show
 	{
 		this.price = price;
 	}//End of setPrice method
-
+	
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
+
 
 	/*
 	 * Sorts an <code>ArrayList</code> of <code>Showing</code> objects in chronological order. This method

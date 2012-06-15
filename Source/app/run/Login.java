@@ -158,7 +158,7 @@ public class Login extends JFrame implements ActionListener
 				}//End of if
 				else
 				{
-					User user = db.getUser(username);
+					User user = db.loadUser(username);
 					byte [] bPassword = PasswordEncryption.hashPassword(username, password);
 
 					if (bPassword.length != user.getPassword().length)

@@ -149,7 +149,7 @@ public class Dashboard extends JFrame implements ActionListener
 
 			new Login();
 			this.dispose();
-		}
+		}//End of else if
 		else
 			JOptionPane.showMessageDialog(this, "This option is temporarily unavailable.", Application.NAME, JOptionPane.INFORMATION_MESSAGE);
 	}//End of actionPerformed method
