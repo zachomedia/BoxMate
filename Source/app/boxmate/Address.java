@@ -3,6 +3,10 @@ package app.boxmate;
 /**
  * Stores a municipal address.
  *
+ * CHANGES:
+ *		June 19, 2012 (Jonathan):
+ *			- Added a parseAddress method.
+ *
  * @author Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
@@ -257,6 +261,31 @@ package app.boxmate;
 	/**************************
 	 * END OF MUTATOR METHODS *
 	 **************************/
+
+	/**
+	 * Parses the string argument as an <code>Address</code> object.
+	 *
+	 * @param s The string to be parsed
+	 * @return The <code>Address</code> represented by the argument.
+	 * @since 1.0.0
+	 */
+	 public static Address parseAddress(String s)
+	 {
+	 	Address address = new Address();
+
+    	String [] splitAddress = s.split("'");
+
+		address.setHouseNumber(Integer.parseInt(splitAddress[1]));
+		address.setStreetName(splitAddress[3]);
+		address.setStreetSuffix(splitAddress[5]);
+		address.setCity(splitAddress[7]);
+		address.setProvince(splitAddress[9]);
+		address.setCountry(splitAddress[11]);
+		address.setPostalCode(splitAddress[13]);
+
+	 	return address;
+	 }//End of parseAddress method
+
 	/**
 	 * Returns the address in standard notation
 	 *

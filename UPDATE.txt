@@ -1,0 +1,73 @@
+I have a base version of the software manual up, just FYI.
+
+Alright, I will have a look at it in the next hour. I am working on the listing of shows right now.
+
+----------------
+
+I have show stuff working... Can you have a look..
+
+I will start on the back end website management thing now.
+
+----------------
+
+Alright, it looks good.  The only thing I might suggest is to add rating, ranking, and time columns to the table so we know it sorts.  I'm just trying to get the filtering to work for the Retrieve Ticket screen and then se what's wrong with Load.  Besides that, I think all the other buttons work as intended now.  Yay!
+
+---------------
+
+Yeah, that table changed can be a last minute thing tomorrow...
+
+---------------
+
+A little thing: the Login page does have the icon.
+
+---------------
+
+I just spent the longest time trying to get one thing to work, googling so many things and all I had to do was delete one line of code :(
+
+---------------
+
+YES! FILTERING WORKS! WIN! I WIN!
+
+Awesome!
+
+------------
+
+June one note regarding filtering -- it is case sensitive... Can we make it case-insensitive?
+
+------------
+
+Ask and you shall receive; apparently "(?i)" in front of a String makes it case-insensitive.  On a side note, did you do part 7 yet?
+
+------------
+
+No, I don't think anyone has.... Ms. Manning hasn't metioned it.
+
+------------
+
+Oh, well I think she said it's due tomor... I mean, today.
+
+------------
+
+lol, well I will ask her when I get in then.
+
+------------
+
+So, yeah, that software manual.
+
+------------
+
+Shoot, statistics.
+
+OOPS!!!! That's probably something we can do quickly tomorrow at lunch.
+I will be getting in to school around 11:20..
+
+Maybe if you want to work on that, I will continue working on the Software user Manual.
+
+------------
+
+Alright.
+
+-----------
+
+Have a look at what I have done in the Software Manual.
+I am going to bed, so I will see you at lunch tomorrow.

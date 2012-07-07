@@ -39,7 +39,11 @@ public class Show
 	 * @since 1.0.0
 	 */
 	private long ID;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> More updates. Also, the database class has been updated with credentials for Mamp on Mac OS X Lion.
 	/**
 	 * The name of the show or production.
 	 *
@@ -76,7 +80,7 @@ public class Show
 	private Rating rating;
 
 	/**
-	 * The average of all users’ rankings of the show or production, out of 5.
+	 * The average of all users rankings of the show or production, out of 5.
 	 *
 	 * @since 1.0.0
 	 */
@@ -114,12 +118,39 @@ public class Show
 	 * @param productionMembers The names of all the people involved with the show or production.
 	 * @param showings A list of all the showings that the show has..
 	 * @param rating The content rating of the show.
-	 * @param ranking The average of all users’ rankings of the show or production, out of 5.
+	 * @param ranking The average of all users rankings of the show or production, out of 5.
 	 * @since 1.0.0
 	 */
     public Show(String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking, double price)
     {
     	this.ID = 0;
+<<<<<<< HEAD
+=======
+    	this.name = name;
+    	this.description = description;
+    	this.productionMembers = productionMembers;
+    	this.showings = showings;
+    	this.rating = rating;
+    	this.ranking = ranking;
+    	this.price = price;
+    }//End of object constructor
+
+	/**
+	 * A constructor for the Show class that requires the user/program to specify all the attributes as parameters.
+	 *
+	 * @param ID The ID of the show, as provided by the database.
+	 * @param name The name of the show or production.
+	 * @param description A description of the show or production.
+	 * @param productionMembers The names of all the people involved with the show or production.
+	 * @param showings A list of all the showings that the show has..
+	 * @param rating The content rating of the show.
+	 * @param ranking The average of all users rankings of the show or production, out of 5.
+	 * @since 1.0.0
+	 */
+    public Show(long ID, String name, String description, ArrayList<String> productionMembers, ArrayList<Showing> showings, Rating rating, double ranking, double price)
+    {
+    	this.ID = ID;
+>>>>>>> More updates. Also, the database class has been updated with credentials for Mamp on Mac OS X Lion.
     	this.name = name;
     	this.description = description;
     	this.productionMembers = productionMembers;
@@ -168,6 +199,16 @@ public class Show
 		return this.ID;
 	}//End of getID method
 	
+	/**
+	 * Gets the value of ID.
+	 *
+	 * @return The value of ID.
+	 */
+	public long getID()
+	{
+		return this.ID;
+	}//End of getID method
+
 	/**
 	 * Gets the value of name.
 	 *
@@ -257,6 +298,16 @@ public class Show
 		this.ID = ID;
 	}//End of setID method
 	
+	/**
+	 * Sets the value of ID.
+	 *
+	 * @param ID The new value for ID.
+	 */
+	public void setID(long ID)
+	{
+		this.ID = ID;
+	}//End of setID method
+
 	/**
 	 * Sets the value of name.
 	 *
@@ -555,8 +606,7 @@ public class Show
 	 */
 	private double avgTicketPerCustomer()
 	{
-		ArrayList<Customer> checked = new ArrayList<Customer>();
-		int customerCount = 0;
+		ArrayList<Long> checked = new ArrayList<Long>();
 		int ticketCount = 0;
 
 		for (Showing s : showings)
@@ -565,10 +615,13 @@ public class Show
 			{
 				ticketCount++;
 
-				if (checked.indexOf(t.getCustomer()) < 0)
-					checked.add(t.getCustomer());
+				if (checked.indexOf(new Long(t.getCustomer().getID())) < 0)
+					checked.add(new Long(t.getCustomer().getID()));
 			}
 		}
+
+		System.out.println(checked.size());
+		System.out.println(ticketCount);
 
 		return ticketCount / checked.size();
 	}//End of avgTicketPerCustomer method

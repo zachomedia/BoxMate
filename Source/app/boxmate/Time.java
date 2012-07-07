@@ -6,8 +6,10 @@ import java.util.Calendar;
  * Stores a time.
  *
  * UPDATES:
- *		June 13:
+ *		June 13 (Jonathan):
  *			- Implemented compareTo method.
+ *		June 19 (Jonathan):
+ *			- Implemented parseTime method.
  *
  * @author Zachary Seguin
  * @version 1.0.0 (12/06/2012)
@@ -145,6 +147,25 @@ public class Time
 		else
 			return 0;
 	}//End of compareTo method
+
+	/**
+	 * Parses the string argument as a <code>Time</code> object.
+	 *
+	 * @param s The string to be parsed
+	 * @return The <code>Time</code> represented by the argument.
+	 * @since 1.0.0
+	 */
+	 public static Time parseTime(String s)
+	 {
+	 	Time time = new Time();
+
+	 	String [] parts = s.split(":");
+
+	 	time.setHour(Integer.parseInt(parts[0]));
+	 	time.setMinute(Integer.parseInt(parts[1]));
+
+	 	return time;
+	 }//End of parseTime method
 
 	/**
 	 * Returns the Time object expressed as a String.

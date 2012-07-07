@@ -3,6 +3,10 @@ package app.boxmate;
 /**
  * Stores a standard phone number.
  *
+ * CHANGES:
+ *		June 17, 2012 (Jonathan):
+ *			- Added a parsePhoneNumber method.
+ *
  * @author Zachary Seguin
  * @version 1.0.0 (24/05/2012)
  * @since 1.0.0
@@ -49,7 +53,6 @@ package app.boxmate;
 	 * @param areaCode The area code.
 	 * @param prefix The prefix.
 	 * @param lineNumber The line number.
-	 *
 	 * @since 1.0.0
 	 */
 	public PhoneNumber(int areaCode, int prefix, int lineNumber)
@@ -140,10 +143,29 @@ package app.boxmate;
 
 
 	/**
+	 * Parses the string argument as a <code>PhoneNumber</code> object.
+	 *
+	 * @param s The string to be parsed
+	 * @return The <code>PhoneNumber</code> represented by the argument.
+	 * @since 1.0.0
+	 */
+	 public static PhoneNumber parsePhoneNumber(String s)
+	 {
+	 	PhoneNumber phoneNum = new PhoneNumber();
+
+	 	String [] parts = s.split("\\D+");
+
+	 	phoneNum.setAreaCode(Integer.parseInt(parts[1]));
+	 	phoneNum.setPrefix(Integer.parseInt(parts[2]));
+	 	phoneNum.setLineNumber(Integer.parseInt(parts[3]));
+
+	 	return phoneNum;
+	 }//End of parsePhoneNumber method
+
+	/**
 	 * Returns a String representation of the phone number.
 	 *
 	 * @return The phone number respresented as a String.
-	 *
 	 * @since 1.0.0
 	 */
 	public String toString()

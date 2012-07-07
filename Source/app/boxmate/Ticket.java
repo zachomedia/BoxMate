@@ -373,7 +373,7 @@ public class Ticket
 
     	output += "[";
     	output += "ID #: " + ID + "| ";
-    	output += customer.getFirstName() +  " "  + customer.getLastName() +" for " + show.getName() + ": " + showing.getDate();
+    	output += customer.getFirstName() +  " "  + customer.getLastName() + " for " + show.getName() + ": " + showing.getDate().toString();
     	output += "[Row: " + row + ", Seat: " + seat + "]";
     	output += "]";
 

@@ -1,5 +1,7 @@
 package app.boxmate;
 
+import javax.swing.ImageIcon;
+
 /**
  * Stores information relevant to the application.
  * All information stored here is Static, and must be changed in the source code.
@@ -44,6 +46,8 @@ package app.boxmate;
 	 * @since 1.0.0
 	 */
 	public final static String COPYRIGHT = "Copyright 2012 - " + AUTHOR;
+	
+	public final static ImageIcon LOGO = new ImageIcon(Application.class.getResource("../images/logo.png"));
 
 	/**
 	 * Returns the Application class as a String.

@@ -68,6 +68,7 @@ public class Session
 	 */
 	public static void openWindow(JFrame window)
 	{
+		window.setIconImage(Application.LOGO.getImage());
 		Session.openWindows.add(window);
 	}//End of openWindow method
 }//End of class

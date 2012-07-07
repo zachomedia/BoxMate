@@ -40,6 +40,7 @@ public class Login extends JFrame implements ActionListener
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setIconImage(Application.LOGO.getImage());
 
 		this.setVisible(true);
 	}//End of constructor
@@ -55,9 +56,7 @@ public class Login extends JFrame implements ActionListener
 		this.getContentPane().setLayout(new GridLayout(1, 2, 0, 0));
 
 		//Initialize the left side
-		ImageIcon imgLogo = new ImageIcon("P:/Final Project/Project/BoxMate/Build/app/images/logo.png");
-
-		this.lblLogo = new JLabel(imgLogo);
+		this.lblLogo = new JLabel(Application.LOGO);
 		this.lblLogo.setHorizontalAlignment(JLabel.CENTER);
 
 		this.add(lblLogo);
@@ -149,12 +148,13 @@ public class Login extends JFrame implements ActionListener
 				{
 					JOptionPane.showMessageDialog(
 						this,
-						"The user " + username + " does not exist.",
+						"The username/password combination you provided does not exist.",
 						Application.NAME,
 						JOptionPane.WARNING_MESSAGE
 					);
 
-					txtUsername.requestFocus();
+					txtPassword.setText("");
+					txtPassword.requestFocus();
 				}//End of if
 				else
 				{
@@ -165,7 +165,7 @@ public class Login extends JFrame implements ActionListener
 					{
 							JOptionPane.showMessageDialog(
 								this,
-								"The username/password combination your provided does not exist.",
+								"The username/password combination you provided does not exist.",
 								Application.NAME,
 								JOptionPane.WARNING_MESSAGE
 							);
@@ -189,14 +189,29 @@ public class Login extends JFrame implements ActionListener
 
 						if (same)
 						{
-							//Login the user
-							Session.login(user);
+							if (user.getAccountLevel() < 10)
+							{
+								JOptionPane.showMessageDialog(
+									this,
+									"You do not have sufficient rights to access this application.",
+									Application.NAME,
+									JOptionPane.WARNING_MESSAGE
+								);
 
-							//Open the dashbard
-							Session.openWindow(new Dashboard());
+								txtPassword.setText("");
+								txtPassword.requestFocus();
+							}//End of if
+							else
+							{
+								//Login the user
+								Session.login(user);
 
-							//Close this window
-							this.dispose();
+								//Open the dashbard
+								Session.openWindow(new Dashboard());
+
+								//Close this window
+								this.dispose();
+							}//End of else
 						}//End of if
 						else
 						{

@@ -6,8 +6,10 @@ import java.util.Calendar;
  * Stores a date.
  *
  * UPDATES:
- *		June 13:
+ *		June 13 (Jonathan):
  *			- Implemented compareTo method.
+ *		June 19 (Jonathan):
+ *			- Implemented parseDate method.
  *
  * @author Zachary Seguin
  * @version 1.0.0 (12/06/2012)
@@ -200,7 +202,6 @@ public class Date implements Comparable
 	 * Compares this date object to another.
 	 *
 	 * @since 1.0.0
-	 * @todo
 	 */
 	public int compareTo(Object object)
 	{
@@ -232,6 +233,28 @@ public class Date implements Comparable
 		else
 			return 0;
 	}//End of compareTo method
+
+	/**
+	 * Parses the string argument as a <code>Date</code> object.
+	 *
+	 * @param s The string to be parsed
+	 * @return The <code>Date</code> represented by the argument.
+	 * @since 1.0.0
+	 */
+	 public static Date parseDate(String s)
+	 {
+	 	Date date = new Date();
+
+	 	s = s.replace(',', ' ');
+
+	 	String [] parts = s.split(" +");
+
+	 	date.setMonth(Month.valueOf(parts[0].toUpperCase()));
+	 	date.setDay(Integer.parseInt(parts[1]));
+	 	date.setYear(Integer.parseInt(parts[2]));
+
+	 	return date;
+	 }//End of parseDate method
 
 	/**
 	 * Returns the Date object expressed as a String.

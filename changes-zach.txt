@@ -1,0 +1,34 @@
+CHANGES
+FROM:	June 15-17, 2012
+BY:	Zachary Seguin
+
+***********************
+*       CHANGES       *
+***********************
+
+Database.java
+-------------
+# added a few methods (for Ticket, Showing) and potentially Theatre
+# all writes now return the object that was written, as it now includes the ID
+
+NewTicket.java
+--------------
+# accepts the objects written to the database
+
+Login.java
+----------
+# updated image icon, works with any path now
+
+Dashboard.java
+--------------
+# updated image icon, works with any path now
+
+***********************
+*        TO-DO        *
+***********************
+
+# finish GUI screens
+# parse methods for date, time, address, phone number
+# implement database update
+# TEST, TEST, TEST
+
